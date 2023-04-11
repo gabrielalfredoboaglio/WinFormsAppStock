@@ -39,26 +39,7 @@ namespace CodigoComun.Modelos
 
         }
 
-        public int AgregarEnDb()
-        {
-            string query = $"insert into deposito (Capacidad, Nombre, Direccion)";
-            query += $" values ({Capacidad.ToString("0.00", CultureInfo.InvariantCulture)}, '{Nombre}', '{Direccion}')";
-            try
-            {
-                SqlCommand command = new SqlCommand(query);
-                int r = ac.ejecQueryDevuelveInt(command);
-                return r;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return -1;
-            }
-            finally
-            {
-                ac.DesConectar();
-            }
-        }
+  
 
         public int ActualizarEnDb(Deposito depositoAModificar)
         {
@@ -82,96 +63,6 @@ namespace CodigoComun.Modelos
             }
 
         }
-        public int EliminarEnDb(int idDepositoEliminar)
-        {
-            string query = $"delete deposito where Id={idDepositoEliminar}";
-            try
-            {
-                SqlCommand command = new SqlCommand(query);
-                int r = ac.ejecQueryDevuelveInt(command);
-                return r;
-            }
-            catch (Exception ex)
-            {
-                return -1;
-            }
-            finally
-            {
-                ac.DesConectar();
-            }
-
-        }
-        public Deposito GetDepositoPorId(int depositoId)
-        {
-            try
-            {
-                string select = $"select * from Deposito where id={depositoId}";
-                SqlCommand command = new SqlCommand(select);
-                DataTable dt = ac.execDT(command);
-
-                if (dt.Rows.Count <= 0)
-                {
-                    // no se encuentra deposito con ese ID
-                    return null;
-                }
-
-                Deposito depositoADevolverConDatosDeLaBaseDeDatos = new Deposito();
-                foreach (DataRow dr in dt.Rows)
-                {
-                    depositoADevolverConDatosDeLaBaseDeDatos.Id = Convert.ToInt32(dr["Id"]);
-                    depositoADevolverConDatosDeLaBaseDeDatos.Nombre = dr["Nombre"].ToString();
-                    depositoADevolverConDatosDeLaBaseDeDatos.Direccion = dr["Direccion"].ToString();
-                    depositoADevolverConDatosDeLaBaseDeDatos.Capacidad = Convert.ToDecimal(dr["Capacidad"]);
-                }
-
-                return depositoADevolverConDatosDeLaBaseDeDatos;
-            }
-            catch (Exception ex)
-            {
-                // error al intentar buscar el deposito por ID
-                return null;
-            }
-            finally
-            {
-                ac.DesConectar();
-            }
-        }
-
-        public List<Deposito> GetTodosLosDepositos()
-        {
-            try
-            {
-                string select = $"select * from deposito";
-                SqlCommand command = new SqlCommand(select);
-                DataTable dt = ac.execDT(command);
-                if (dt.Rows.Count <= 0)
-                {
-                    return null;
-                }
-
-                List<Deposito> depositosADevolverConDatosDeLaBaseDeDatos = new List<Deposito>();
-                foreach (DataRow dr in dt.Rows)
-                {
-                    Deposito depositoAuxiliar = new Deposito();
-                    depositoAuxiliar.Id = Convert.ToInt32(dr["Id"]);
-                    depositoAuxiliar.Nombre = dr["Nombre"].ToString();
-                    depositoAuxiliar.Direccion = dr["Direccion"].ToString();
-                    depositosADevolverConDatosDeLaBaseDeDatos.Add(depositoAuxiliar);
-                }
-
-                return depositosADevolverConDatosDeLaBaseDeDatos;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-            finally
-            {
-                ac.DesConectar();
-            }
-        }
-
-
 
     }
 }

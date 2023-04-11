@@ -1,4 +1,5 @@
-﻿using CodigoComun.Modelos;
+﻿using CodigoComun.Models;
+using CodigoComun.Negocio;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,10 +25,11 @@ namespace WinFormsAppStock.Vistas
 
         private void CargarDepositos()
         {
-            Deposito depositoAuxiliar = new Deposito();
-            List<Deposito> depositoDeLaBaseDeDatos = depositoAuxiliar.GetTodosLosDepositos();
+            DepositoServices depositoServices = new DepositoServices();
+            List<Deposito> depositoDeLaBaseDeDatos = depositoServices.ObtenerTodosLosDepositos();
             dgvDepositos.DataSource = depositoDeLaBaseDeDatos;
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             DepositosABM depositosABM = new DepositosABM();
@@ -36,17 +38,18 @@ namespace WinFormsAppStock.Vistas
 
 
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            {
-                {
-                    int IdDepositoAmodificar = Convert.ToInt32(txtIdDeposito.Text);
 
-                    DepositosABM depositosABMModoModificacion = new DepositosABM(IdDepositoAmodificar);
-                    depositosABMModoModificacion.Show();
-                }
-            }
-        }
+        //private void button3_Click(object sender, EventArgs e)
+        //{
+        //    {
+        //        {
+        //            int IdDepositoAmodificar = Convert.ToInt32(txtIdDeposito.Text);
+
+        //            DepositosABM depositosABMModoModificacion = new DepositosABM(IdDepositoAmodificar);
+        //            depositosABMModoModificacion.Show();
+        //        }
+        //    }
+        //}
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -60,22 +63,22 @@ namespace WinFormsAppStock.Vistas
             // Obtener el Id del Deposito a eliminar
             int idDeposito = Convert.ToInt32(txtIdDeposito.Text);
 
-            // Instanciar un objeto Deposito
-            Deposito deposito = new Deposito();
+            // Instanciar un objeto DepositoServices
+            DepositoServices depositoServices = new DepositoServices();
 
-            // Llamar al método EliminarEnDb del objeto Deposito, pasando el Id del Deposito a eliminar
-            int resultado =deposito.EliminarEnDb(idDeposito);
+            // Llamar al método EliminarDeposito del objeto DepositoServices, pasando el Id del Deposito a eliminar
+            string resultado = depositoServices.EliminarDeposito(idDeposito);
 
-            if (resultado != -1)
+            if (resultado == "Articulo eliminado correctamente")
             {
                 // Mostrar un mensaje de confirmación
-                MessageBox.Show("El Deposito ha sido eliminado correctamente");
+                MessageBox.Show(resultado);
             }
             else
             {
                 // Mostrar un mensaje de error
-                MessageBox.Show("Ha ocurrido un error al eliminar el Deposito");
+                MessageBox.Show(resultado);
             }
         }
     }
-}
+    }

@@ -1,4 +1,5 @@
 ﻿using CodigoComun.Modelos;
+using CodigoComun.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

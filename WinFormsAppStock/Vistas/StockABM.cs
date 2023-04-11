@@ -1,4 +1,5 @@
 ﻿using CodigoComun.Modelos;
+using CodigoComun.Models;
 using CodigoComun.Negocio;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Deposito = CodigoComun.Models.Deposito;
 
 namespace WinFormsAppStock.Vistas
 {
@@ -46,17 +48,18 @@ namespace WinFormsAppStock.Vistas
         }
 
 
-        private void CargarComboBoxes()
+         private void CargarComboBoxes()
         {
             // Cargar los datos de los ComboBoxes
             txtIdComboboxArticulo.DataSource = new ArticuloServices().ObtenerTodosLosArticulos();
             txtIdComboboxArticulo.DisplayMember = "Nombre";
             txtIdComboboxArticulo.ValueMember = "Id";
 
-            txtComboBoxDeposito.DataSource = new Deposito().GetTodosLosDepositos();
+            txtComboBoxDeposito.DataSource = new DepositoServices().ObtenerTodosLosDepositos();
             txtComboBoxDeposito.DisplayMember = "Nombre";
             txtComboBoxDeposito.ValueMember = "Id";
         }
+
 
 
 

@@ -1,5 +1,7 @@
 ﻿
 using CodigoComun.Datos;
+using CodigoComun.Modelos;
+using CodigoComun.Negocio;
 using CodigoComun.Repository;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodigoComun.Modelos
+namespace CodigoComun.Models
 {
     public class Stock
     {
@@ -21,7 +23,7 @@ namespace CodigoComun.Modelos
         public Articulo ArticuloGuardado { get; set; }
 
         public Deposito DepositoDondeEstaGuardado { get; set; }
-
+        public DepositoServices depositoServices = new DepositoServices();
         public decimal Cantidad { get; set; }
 
         private AccesoDatos ac;
@@ -125,7 +127,7 @@ namespace CodigoComun.Modelos
                     stockADevolverConDatosDeLaBaseDeDatos.Id = Convert.ToInt32(dr["Id"]);
                     stockADevolverConDatosDeLaBaseDeDatos.ArticuloGuardado = articuloRepository.GetArticuloPorId(Convert.ToInt32(dr["ArticuloId"]));
 
-                    stockADevolverConDatosDeLaBaseDeDatos.DepositoDondeEstaGuardado = new Deposito().GetDepositoPorId(Convert.ToInt32(dr["DepositoId"]));
+                    stockADevolverConDatosDeLaBaseDeDatos.DepositoDondeEstaGuardado = depositoServices.ObtenerDepositoPorId(Convert.ToInt32(dr["DepositoId"]));
                     stockADevolverConDatosDeLaBaseDeDatos.Cantidad = Convert.ToDecimal(dr["Cantidad"]);
                 }
 
@@ -158,7 +160,7 @@ namespace CodigoComun.Modelos
                     Stock stock = new Stock();
                     stock.Id = Convert.ToInt32(dr["Id"]);
                     stock.ArticuloGuardado = articuloRepository.GetArticuloPorId(Convert.ToInt32(dr["IdArticulo"]));
-                    stock.DepositoDondeEstaGuardado = new Deposito().GetDepositoPorId(Convert.ToInt32(dr["IdDeposito"]));
+                    stock.DepositoDondeEstaGuardado = depositoServices.ObtenerDepositoPorId(Convert.ToInt32(dr["IdDeposito"]));
                     stock.Cantidad = Convert.ToDecimal(dr["Cantidad"]);
 
                     listaStocks.Add(stock);
