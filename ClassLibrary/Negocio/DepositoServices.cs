@@ -57,6 +57,20 @@ namespace CodigoComun.Negocio
 
         }
 
+        public int ModificarDeposito(Deposito depositoAModificar)
+        {
+            DepositoRepository depositoRepository = new DepositoRepository();
+            int resultado = depositoRepository.ActualizarDeposito(depositoAModificar);
+
+            if (resultado == 1)
+            {
+                return resultado;
+            }
+            else
+            {
+                return -1;
+            }
+        }
 
     }
 }

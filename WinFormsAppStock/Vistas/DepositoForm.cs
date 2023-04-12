@@ -39,17 +39,17 @@ namespace WinFormsAppStock.Vistas
 
 
 
-        //private void button3_Click(object sender, EventArgs e)
-        //{
-        //    {
-        //        {
-        //            int IdDepositoAmodificar = Convert.ToInt32(txtIdDeposito.Text);
+        private void button3_Click(object sender, EventArgs e)
+        {
+            {
+                {
+                    int IdDepositoAmodificar = Convert.ToInt32(txtIdDeposito.Text);
 
-        //            DepositosABM depositosABMModoModificacion = new DepositosABM(IdDepositoAmodificar);
-        //            depositosABMModoModificacion.Show();
-        //        }
-        //    }
-        //}
+                    DepositosABM depositosABMModoModificacion = new DepositosABM(IdDepositoAmodificar);
+                    depositosABMModoModificacion.Show();
+                }
+            }
+        }
 
         private void button1_Click_1(object sender, EventArgs e)
         {

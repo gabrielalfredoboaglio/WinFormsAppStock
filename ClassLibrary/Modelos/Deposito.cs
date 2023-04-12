@@ -41,29 +41,6 @@ namespace CodigoComun.Modelos
 
   
 
-        public int ActualizarEnDb(Deposito depositoAModificar)
-        {
-            string query = $"update deposito set Nombre = '{depositoAModificar.Nombre}', " +
-                           $"Direccion='{depositoAModificar.Direccion}', " +
-                           $"Capacidad={depositoAModificar.Capacidad.ToString("0.00", CultureInfo.InvariantCulture)} " +
-                           $"where id = {depositoAModificar.Id}";
-            try
-            {
-                SqlCommand command = new SqlCommand(query);
-                int r = ac.ejecQueryDevuelveInt(command);
-                return r;
-            }
-            catch (Exception ex)
-            {
-                return -1;
-            }
-            finally
-            {
-                ac.DesConectar();
-            }
-
-        }
-
     }
 }
 

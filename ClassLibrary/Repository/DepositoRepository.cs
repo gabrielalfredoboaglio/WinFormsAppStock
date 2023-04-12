@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace CodigoComun.Repository
 {
     public class DepositoRepository
     {
-
+        StockAppContext db = new StockAppContext();
         public int AddDeposito(Deposito depositoAAgregar)
         {
 
-            StockAppContext db = new StockAppContext();
+            
             db.Depositos.Add(depositoAAgregar);
             return db.SaveChanges();
 
@@ -30,7 +31,7 @@ namespace CodigoComun.Repository
 
         public List<Deposito> GetTodosLosDepositos()
         {
-            StockAppContext db = new StockAppContext();
+            
             List<Deposito> depositos = new List<Deposito>();  
             
 
@@ -62,6 +63,11 @@ namespace CodigoComun.Repository
 
         }
 
-       
+        public int ActualizarDeposito(Deposito depositoAModificar)
+        {
+            db.Entry(depositoAModificar).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            return db.SaveChanges();
+        }
+
     }
 }
