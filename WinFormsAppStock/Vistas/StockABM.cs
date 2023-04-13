@@ -26,13 +26,17 @@ namespace WinFormsAppStock.Vistas
         {
             InitializeComponent();
             _stockService = new StockService(new StockRepository());
-             CargarComboBoxes();
+            CargarComboBoxes();
         }
 
         public StockABM(int idStockAModificar)
         {
             InitializeComponent();
             _stockService = new StockService(new StockRepository());
+
+
+
+
         }
 
 
@@ -82,6 +86,9 @@ namespace WinFormsAppStock.Vistas
         {
             btnAgregar_Click(sender, e);
         }
+
+
+       
     }
 }
 

@@ -9,6 +9,8 @@ namespace CodigoComun.Models
         public int? IdDeposito { get; set; }
         public decimal? Cantidad { get; set; }
 
+       
+
         public virtual Deposito IdDepositoNavigation { get; set; }
 
         [NotMapped]
