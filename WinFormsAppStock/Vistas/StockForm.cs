@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Stock = CodigoComun.Models.Stock;
-
+using CodigoComun.Negocio;
 namespace WinFormsAppStock.Vistas
 {
     public partial class StockForm : Form
@@ -23,11 +23,18 @@ namespace WinFormsAppStock.Vistas
         public StockForm()
         {
             InitializeComponent();
-
+            stockService = new StockService(new StockRepository());
+            CargarStocks();
 
 
         }
-
+        private void CargarStocks()
+        {
+            StockRepository stockRepository = new StockRepository();
+            StockService stockServices = new StockService(stockRepository);
+            List<Stock> stocksDeLaBaseDeDatos = stockServices.ObtenerTodosLosStocks();
+            dgvStock.DataSource = stocksDeLaBaseDeDatos;
+        }
         private void button3_Click(object sender, EventArgs e)
         {
             StockABM stockABM = new StockABM();
@@ -39,6 +46,8 @@ namespace WinFormsAppStock.Vistas
             StockABM stockABM = new StockABM();
             stockABM.Show();
         }
+
+
 
 
 

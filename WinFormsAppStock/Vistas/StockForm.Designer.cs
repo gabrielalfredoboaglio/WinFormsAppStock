@@ -90,6 +90,8 @@
             // 
             // dgvStock
             // 
+            dgvStock.AllowDrop = true;
+            dgvStock.AllowUserToOrderColumns = true;
             dgvStock.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvStock.Location = new Point(163, 365);
             dgvStock.Margin = new Padding(4);
@@ -97,6 +99,7 @@
             dgvStock.RowHeadersWidth = 51;
             dgvStock.RowTemplate.Height = 29;
             dgvStock.Size = new Size(1118, 282);
+            dgvStock.StandardTab = true;
             dgvStock.TabIndex = 12;
             // 
             // StockForm
