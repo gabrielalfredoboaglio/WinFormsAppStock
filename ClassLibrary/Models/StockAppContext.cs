@@ -19,6 +19,7 @@ namespace CodigoComun.Models
         }
 
         public virtual DbSet<Deposito> Depositos { get; set; }
+        public virtual DbSet<Stock> Stocks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -44,6 +45,16 @@ namespace CodigoComun.Models
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Stock>(entity =>
+            {
+                entity.Property(e => e.Cantidad).HasColumnType("decimal(18, 2)");
+
+                entity.HasOne(d => d.IdDepositoNavigation)
+                    .WithMany(p => p.Stocks)
+                    .HasForeignKey(d => d.IdDeposito)
+                    .HasConstraintName("FK_Stocks_Deposito1");
             });
 
             OnModelCreatingPartial(modelBuilder);

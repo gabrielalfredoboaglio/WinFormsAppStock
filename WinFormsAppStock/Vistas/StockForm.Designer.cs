@@ -64,7 +64,6 @@
             button2.TabIndex = 8;
             button2.Text = "Eliminar Stock";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
             // 
             // Button1
             // 
@@ -75,7 +74,7 @@
             Button1.TabIndex = 9;
             Button1.Text = "Modificar Stock";
             Button1.UseVisualStyleBackColor = true;
-            Button1.Click += button1_Click;
+           
             // 
             // button4
             // 

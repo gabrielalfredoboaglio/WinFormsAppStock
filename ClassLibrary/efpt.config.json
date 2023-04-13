@@ -17,6 +17,10 @@
       {
          "Name": "[dbo].[Deposito]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Stocks]",
+         "ObjectType": 0
       }
    ],
    "UiHint": "LAPTOP-0TDHNQM0\\SQLEXPRESS.StockApp",

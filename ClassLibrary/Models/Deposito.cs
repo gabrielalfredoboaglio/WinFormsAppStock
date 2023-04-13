@@ -7,9 +7,16 @@ namespace CodigoComun.Models
 {
     public partial class Deposito
     {
+        public Deposito()
+        {
+            Stocks = new HashSet<Stock>();
+        }
+
         public int Id { get; set; }
         public decimal? Capacidad { get; set; }
         public string Nombre { get; set; }
         public string Direccion { get; set; }
+
+        public virtual ICollection<Stock> Stocks { get; set; }
     }
 }
