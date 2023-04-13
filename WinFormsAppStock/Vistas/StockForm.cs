@@ -23,18 +23,12 @@ namespace WinFormsAppStock.Vistas
         public StockForm()
         {
             InitializeComponent();
-            stockService = new StockService(new StockRepository());
-            CargarStocks();
+           
+           
 
 
         }
-        private void CargarStocks()
-        {
-            StockRepository stockRepository = new StockRepository();
-            StockService stockServices = new StockService(stockRepository);
-            List<Stock> stocksDeLaBaseDeDatos = stockServices.ObtenerTodosLosStocks();
-            dgvStock.DataSource = stocksDeLaBaseDeDatos;
-        }
+       
         private void button3_Click(object sender, EventArgs e)
         {
             StockABM stockABM = new StockABM();
