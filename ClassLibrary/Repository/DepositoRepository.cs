@@ -68,6 +68,13 @@ namespace CodigoComun.Repository
             db.Entry(depositoAModificar).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             return db.SaveChanges();
         }
+        public Deposito GetDepositoPorNombre(string nombreDeposito)
+        {
+            using (var context = new StockAppContext())
+            {
+                return context.Depositos.FirstOrDefault(d => d.Nombre == nombreDeposito);
+            }
+        }
 
     }
 }

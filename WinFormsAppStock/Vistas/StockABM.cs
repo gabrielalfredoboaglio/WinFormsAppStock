@@ -27,17 +27,60 @@ namespace WinFormsAppStock.Vistas
             InitializeComponent();
             _stockService = new StockService(new StockRepository());
             CargarComboBoxes();
+
         }
 
         public StockABM(int idStockAModificar)
         {
             InitializeComponent();
             _stockService = new StockService(new StockRepository());
-
+            CargarDatosStockParaModificar(idStockAModificar);
 
 
 
         }
+        private void CargarDatosStockParaModificar(int idStockAModificar)
+        {
+            Stock stockConDatosDeLaBaseDeDatos = _stockService.ObtenerStockPorId(idStockAModificar);
+
+            txtIdComboboxArticulo.Text = stockConDatosDeLaBaseDeDatos.IdArticulo.ToString();
+            txtComboBoxDeposito.Text = stockConDatosDeLaBaseDeDatos.IdDeposito.ToString();
+            txtCantidad.Text = stockConDatosDeLaBaseDeDatos.Cantidad.ToString();
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            ModificarStock();
+        }
+
+        private void ModificarStock()
+        {
+            int id = Convert.ToInt32(txtIdStockModificar.Text);
+
+            // Obtener el objeto Articulo correspondiente al nombre seleccionado en el ComboBox
+            Articulo articulo = new ArticuloServices().ObtenerArticuloPorNombre(txtIdComboboxArticulo.Text);
+
+            // Obtener el objeto Deposito correspondiente al nombre seleccionado en el ComboBox
+            Deposito deposito = new DepositoServices().ObtenerDepositoPorNombre(txtComboBoxDeposito.Text);
+
+            decimal cantidad = Convert.ToDecimal(txtCantidad.Text);
+
+            Stock stock = new Stock
+            {
+                Id = id,
+                IdArticulo = articulo.Id,
+                IdDeposito = deposito.Id,
+                Cantidad = cantidad
+            };
+
+            _stockService.ActualizarStock(stock);
+
+            MessageBox.Show("El stock ha sido modificado correctamente.");
+        }
+
+
+
+
 
 
         private void CargarComboBoxes()
@@ -87,8 +130,10 @@ namespace WinFormsAppStock.Vistas
             btnAgregar_Click(sender, e);
         }
 
-
-       
+        private void button1_Click(object sender, EventArgs e)
+        {
+            btnModificar_Click(sender, e);
+        }
     }
 }
 

@@ -200,6 +200,44 @@ namespace CodigoComun.Repository
                 ac.DesConectar();
             }
         }
+        public Articulo GetArticuloPorNombre(string nombreArticulo)
+        {
+            try
+            {
+                string select = $"SELECT * FROM Articulo WHERE Nombre = '{nombreArticulo}'";
+                SqlCommand command = new SqlCommand(select);
+                DataTable dt = ac.execDT(command);
+
+                if (dt.Rows.Count <= 0)
+                {
+                    // no se encuentra articulo con ese nombre
+                    return null;
+                }
+
+                DataRow dr = dt.Rows[0];
+                Articulo articuloADevolverConDatosDeLaBaseDeDatos = new Articulo()
+                {
+                    Id = Convert.ToInt32(dr["Id"]),
+                    Nombre = dr["Nombre"].ToString(),
+                    Marca = dr["Marca"].ToString(),
+                    Precio = Convert.ToDecimal(dr["Precio"]),
+                    MinimoStock = Convert.ToInt32(dr["MinimoStock"]),
+                    Proveedor = dr["Proveedor"].ToString(),
+                    Codigo = dr["Codigo"].ToString()
+                };
+
+                return articuloADevolverConDatosDeLaBaseDeDatos;
+            }
+            catch (Exception ex)
+            {
+                // error al intentar buscar el articulo por nombre
+                return null;
+            }
+            finally
+            {
+                ac.DesConectar();
+            }
+        }
 
 
     }

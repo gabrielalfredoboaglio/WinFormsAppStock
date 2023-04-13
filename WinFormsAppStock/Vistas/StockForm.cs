@@ -40,7 +40,7 @@ namespace WinFormsAppStock.Vistas
             stockABM.Show();
         }
 
-      
+
 
         private void button2_Click_1(object sender, EventArgs e)
         {
@@ -66,6 +66,12 @@ namespace WinFormsAppStock.Vistas
                 // Mostrar un mensaje de error
                 MessageBox.Show(resultado);
             }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            StockABM stockABM = new StockABM();
+            stockABM.Show();
         }
     }
 }

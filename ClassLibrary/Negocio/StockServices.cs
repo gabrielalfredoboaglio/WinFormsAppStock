@@ -56,6 +56,8 @@ public class StockService
     {
         return "Error al actualizar el stock";
     }
+
+
 }
 
 }

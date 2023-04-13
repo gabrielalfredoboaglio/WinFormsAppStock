@@ -92,6 +92,12 @@ namespace CodigoComun.Negocio
         {
             return articuloRepository.GetArticuloPorId(articuloId);
         }
+
+        public Articulo ObtenerArticuloPorNombre(string nombre)
+        {
+            return articuloRepository.GetArticuloPorNombre(nombre);
+        }
+
     }
 }
 

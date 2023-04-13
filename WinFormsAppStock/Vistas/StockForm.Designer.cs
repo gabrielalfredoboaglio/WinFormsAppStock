@@ -75,6 +75,7 @@
             Button1.TabIndex = 9;
             Button1.Text = "Modificar Stock";
             Button1.UseVisualStyleBackColor = true;
+            Button1.Click += Button1_Click;
             // 
             // button4
             // 

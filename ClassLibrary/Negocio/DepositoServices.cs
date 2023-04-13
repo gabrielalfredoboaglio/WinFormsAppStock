@@ -57,6 +57,15 @@ namespace CodigoComun.Negocio
 
         }
 
+
+        public Deposito ObtenerDepositoPorNombre(string nombreDeposito)
+        {
+            DepositoRepository depositoRepository = new DepositoRepository();
+            return depositoRepository.GetDepositoPorNombre(nombreDeposito);
+        }
+
+
+
         public int ModificarDeposito(Deposito depositoAModificar)
         {
             DepositoRepository depositoRepository = new DepositoRepository();
@@ -74,3 +83,4 @@ namespace CodigoComun.Negocio
 
     }
 }
+
