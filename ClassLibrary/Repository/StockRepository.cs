@@ -36,9 +36,7 @@ namespace CodigoComun.Repository
         {
             try
             {
-                return db.Stocks.Include(s => s.ArticuloGuardado)
-                                .Include(s => s.DepositoDondeEstaGuardado)
-                                .ToList();
+                return db.Stocks.ToList();
             }
             catch (Exception ex)
             {
@@ -46,6 +44,8 @@ namespace CodigoComun.Repository
                 return null;
             }
         }
+
+
         public int EliminarStock(int idStock)
         {
             using (var context = new StockAppContext())

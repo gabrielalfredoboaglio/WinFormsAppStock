@@ -13,19 +13,19 @@ using System.Windows.Forms;
 
 namespace WinFormsAppStock.Vistas
 {
-    public partial class ArticulosABM : Form
+    public partial class ArticuloABM : Form
     {
         public bool EstoyModificando { get; set; }
 
         private readonly ArticuloService articuloService;
-        public ArticulosABM()
+        public ArticuloABM()
         {
             InitializeComponent();
             EstoyModificando = false;
             articuloService = new ArticuloService();
         }
 
-        public ArticulosABM(int idArticuloAModificar)
+        public ArticuloABM(int idArticuloAModificar)
         {
             InitializeComponent();
             CargarDatosArticuloParaModificar(idArticuloAModificar);

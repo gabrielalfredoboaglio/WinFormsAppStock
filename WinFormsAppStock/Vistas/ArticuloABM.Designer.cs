@@ -1,6 +1,6 @@
 ﻿namespace WinFormsAppStock.Vistas
 {
-    partial class ArticulosABM
+    partial class ArticuloABM
     {
         /// <summary>
         /// Required designer variable.

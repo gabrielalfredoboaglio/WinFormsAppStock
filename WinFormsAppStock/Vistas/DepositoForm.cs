@@ -30,7 +30,7 @@ namespace WinFormsAppStock.Vistas
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DepositosABM depositosABM = new DepositosABM();
+            DepositoABM depositosABM = new DepositoABM();
             depositosABM.Show();
         }
 
@@ -40,7 +40,7 @@ namespace WinFormsAppStock.Vistas
                 {
                     int IdDepositoAmodificar = Convert.ToInt32(txtIdDeposito.Text);
 
-                    DepositosABM depositosABMModoModificacion = new DepositosABM(IdDepositoAmodificar);
+                    DepositoABM depositosABMModoModificacion = new DepositoABM(IdDepositoAmodificar);
                     depositosABMModoModificacion.Show();
                 }
             }
@@ -49,7 +49,7 @@ namespace WinFormsAppStock.Vistas
         private void button1_Click_1(object sender, EventArgs e)
         {
 
-            DepositosABM depositosABM = new DepositosABM();
+            DepositoABM depositosABM = new DepositoABM();
             depositosABM.Show();
         }
 

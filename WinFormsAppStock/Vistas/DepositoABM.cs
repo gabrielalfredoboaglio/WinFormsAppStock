@@ -5,18 +5,18 @@ using System.Windows.Forms;
 
 namespace WinFormsAppStock.Vistas
 {
-    public partial class DepositosABM : Form
+    public partial class DepositoABM : Form
     {
 
         public bool EstoyModificando { get; set; }
 
-        public DepositosABM()
+        public DepositoABM()
         {
             InitializeComponent();
             EstoyModificando = false;
         }
 
-        public DepositosABM(int idDepositoAModificar)
+        public DepositoABM(int idDepositoAModificar)
         {
             InitializeComponent();
             CargarDatosDepositoParaModificar(idDepositoAModificar);

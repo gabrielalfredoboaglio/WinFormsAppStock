@@ -13,9 +13,9 @@ using System.Windows.Forms;
 
 namespace WinFormsAppStock.Vistas
 {
-    public partial class ArticulosForm : Form
+    public partial class ArticuloForm : Form
     {
-        public ArticulosForm()
+        public ArticuloForm()
         {
             InitializeComponent();
             CargarArticulos();
@@ -29,7 +29,7 @@ namespace WinFormsAppStock.Vistas
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ArticulosABM articulosABM = new ArticulosABM();
+            ArticuloABM articulosABM = new ArticuloABM();
             articulosABM.Show();
         }
         private void button2_Click(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace WinFormsAppStock.Vistas
         {
             int IdArticuloAmodificar = Convert.ToInt32(txtIdArticulo.Text);
 
-            ArticulosABM articulosABMModoModificacion = new ArticulosABM(IdArticuloAmodificar);
+            ArticuloABM articulosABMModoModificacion = new ArticuloABM(IdArticuloAmodificar);
             articulosABMModoModificacion.Show();
         }
 

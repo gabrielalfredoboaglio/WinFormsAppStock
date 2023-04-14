@@ -13,7 +13,7 @@ namespace WinFormsAppStock
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ArticulosForm articulosForm = new ArticulosForm();
+            ArticuloForm articulosForm = new ArticuloForm();
             articulosForm.Show();
         }
 

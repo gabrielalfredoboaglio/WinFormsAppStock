@@ -1,6 +1,6 @@
 ﻿namespace WinFormsAppStock.Vistas
 {
-    partial class ArticulosForm
+    partial class ArticuloForm
     {
         /// <summary>
         /// Required designer variable.
