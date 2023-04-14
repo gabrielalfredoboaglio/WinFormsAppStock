@@ -23,12 +23,9 @@ namespace WinFormsAppStock.Vistas
         public StockForm()
         {
             InitializeComponent();
-           
-           
-
 
         }
-       
+
         private void button3_Click(object sender, EventArgs e)
         {
             StockABM stockABM = new StockABM();
@@ -40,9 +37,6 @@ namespace WinFormsAppStock.Vistas
             StockABM stockABM = new StockABM();
             stockABM.Show();
         }
-
-
-
 
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -75,7 +69,7 @@ namespace WinFormsAppStock.Vistas
         {
             StockABM stockABM = new StockABM();
             stockABM.Show();
-        }
+        }     
     }
 }
 

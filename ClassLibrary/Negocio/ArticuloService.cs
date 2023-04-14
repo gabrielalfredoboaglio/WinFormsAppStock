@@ -11,7 +11,7 @@ using CodigoComun.Datos;
 
 namespace CodigoComun.Negocio
 {
-    public class ArticuloServices
+    public class ArticuloService
     {
 
 

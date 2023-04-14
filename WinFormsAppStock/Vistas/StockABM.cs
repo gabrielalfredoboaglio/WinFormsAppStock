@@ -36,8 +36,6 @@ namespace WinFormsAppStock.Vistas
             _stockService = new StockService(new StockRepository());
             CargarDatosStockParaModificar(idStockAModificar);
 
-
-
         }
         private void CargarDatosStockParaModificar(int idStockAModificar)
         {
@@ -58,10 +56,10 @@ namespace WinFormsAppStock.Vistas
             int id = Convert.ToInt32(txtIdStockModificar.Text);
 
             // Obtener el objeto Articulo correspondiente al nombre seleccionado en el ComboBox
-            Articulo articulo = new ArticuloServices().ObtenerArticuloPorNombre(txtIdComboboxArticulo.Text);
+            Articulo articulo = new ArticuloService().ObtenerArticuloPorNombre(txtIdComboboxArticulo.Text);
 
             // Obtener el objeto Deposito correspondiente al nombre seleccionado en el ComboBox
-            Deposito deposito = new DepositoServices().ObtenerDepositoPorNombre(txtComboBoxDeposito.Text);
+            Deposito deposito = new DepositoService().ObtenerDepositoPorNombre(txtComboBoxDeposito.Text);
 
             decimal cantidad = Convert.ToDecimal(txtCantidad.Text);
 
@@ -78,19 +76,14 @@ namespace WinFormsAppStock.Vistas
             MessageBox.Show("El stock ha sido modificado correctamente.");
         }
 
-
-
-
-
-
         private void CargarComboBoxes()
         {
             // Cargar los datos de los ComboBoxes
-            txtIdComboboxArticulo.DataSource = new ArticuloServices().ObtenerTodosLosArticulos();
+            txtIdComboboxArticulo.DataSource = new ArticuloService().ObtenerTodosLosArticulos();
             txtIdComboboxArticulo.DisplayMember = "Nombre";
             txtIdComboboxArticulo.ValueMember = "Id";
 
-            txtComboBoxDeposito.DataSource = new DepositoServices().ObtenerTodosLosDepositos();
+            txtComboBoxDeposito.DataSource = new DepositoService().ObtenerTodosLosDepositos();
             txtComboBoxDeposito.DisplayMember = "Nombre";
             txtComboBoxDeposito.ValueMember = "Id";
         }

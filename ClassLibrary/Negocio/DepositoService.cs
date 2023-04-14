@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CodigoComun.Negocio
 {
-    public class DepositoServices
+    public class DepositoService
     {
 
         public List<Deposito> ObtenerTodosLosDepositos()

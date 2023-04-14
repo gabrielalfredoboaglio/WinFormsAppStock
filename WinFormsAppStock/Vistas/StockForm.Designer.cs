@@ -101,6 +101,7 @@
             dgvStock.Size = new Size(1118, 282);
             dgvStock.StandardTab = true;
             dgvStock.TabIndex = 12;
+           
             // 
             // StockForm
             // 

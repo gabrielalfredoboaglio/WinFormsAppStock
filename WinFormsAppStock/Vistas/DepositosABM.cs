@@ -25,7 +25,7 @@ namespace WinFormsAppStock.Vistas
             
         private void CargarDatosDepositoParaModificar(int idDepositoAModificar)
         {
-            DepositoServices depositoServices = new DepositoServices();
+            DepositoService depositoServices = new DepositoService();
             Deposito depositoConDatosDeLaBaseDeDatos = depositoServices.ObtenerDepositoPorId(idDepositoAModificar);
 
             if (depositoConDatosDeLaBaseDeDatos != null)
@@ -41,10 +41,9 @@ namespace WinFormsAppStock.Vistas
             }
         }
 
-
         private void ModificarDeposito()
         {
-            DepositoServices depositoServices = new DepositoServices();
+            DepositoService depositoServices = new DepositoService();
 
             // Crear un objeto Deposito y establecer sus propiedades
             Deposito depositoAModificar = new Deposito();
@@ -101,7 +100,7 @@ namespace WinFormsAppStock.Vistas
         }
         private void AgregarDeposito()
         {
-            DepositoServices depositoServices = new DepositoServices();
+            DepositoService depositoServices = new DepositoService();
 
             Deposito nuevoDeposito = new Deposito();
             nuevoDeposito.Nombre = txtNombre.Text;

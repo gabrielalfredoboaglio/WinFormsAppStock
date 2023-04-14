@@ -20,11 +20,9 @@ namespace WinFormsAppStock.Vistas
             InitializeComponent();
             CargarArticulos();
         }
-
-
         private void CargarArticulos()
         {
-            ArticuloServices articuloServices = new ArticuloServices();
+            ArticuloService articuloServices = new ArticuloService();
             List<Articulo> articulos = articuloServices.ObtenerTodosLosArticulos();
             dgvArticulos.DataSource = articulos;
         }
@@ -56,8 +54,6 @@ namespace WinFormsAppStock.Vistas
                 MessageBox.Show("Ha ocurrido un error al eliminar el Articulo");
             }
         }
-
-
         private void button3_Click(object sender, EventArgs e)
         {
             int IdArticuloAmodificar = Convert.ToInt32(txtIdArticulo.Text);

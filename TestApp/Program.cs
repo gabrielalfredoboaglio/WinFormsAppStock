@@ -2,7 +2,7 @@
 using CodigoComun.Negocio;
 
 
-DepositoServices depositoServices = new DepositoServices();
+DepositoService depositoServices = new DepositoService();
 List<Deposito> depositos = depositoServices.ObtenerTodosLosDepositos();
 
 foreach (Deposito deposito in depositos)

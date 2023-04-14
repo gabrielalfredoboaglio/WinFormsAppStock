@@ -21,11 +21,9 @@ namespace WinFormsAppStock.Vistas
 
         }
 
-
-
         private void CargarDepositos()
         {
-            DepositoServices depositoServices = new DepositoServices();
+            DepositoService depositoServices = new DepositoService();
             List<Deposito> depositoDeLaBaseDeDatos = depositoServices.ObtenerTodosLosDepositos();
             dgvDepositos.DataSource = depositoDeLaBaseDeDatos;
         }
@@ -35,9 +33,6 @@ namespace WinFormsAppStock.Vistas
             DepositosABM depositosABM = new DepositosABM();
             depositosABM.Show();
         }
-
-
-
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -64,7 +59,7 @@ namespace WinFormsAppStock.Vistas
             int idDeposito = Convert.ToInt32(txtIdDeposito.Text);
 
             // Instanciar un objeto DepositoServices
-            DepositoServices depositoServices = new DepositoServices();
+            DepositoService depositoServices = new DepositoService();
 
             // Llamar al método EliminarDeposito del objeto DepositoServices, pasando el Id del Deposito a eliminar
             string resultado = depositoServices.EliminarDeposito(idDeposito);

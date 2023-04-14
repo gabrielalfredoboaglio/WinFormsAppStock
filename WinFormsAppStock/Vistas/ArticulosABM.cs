@@ -15,24 +15,22 @@ namespace WinFormsAppStock.Vistas
 {
     public partial class ArticulosABM : Form
     {
-
         public bool EstoyModificando { get; set; }
 
-        private readonly ArticuloServices articuloService;
+        private readonly ArticuloService articuloService;
         public ArticulosABM()
         {
             InitializeComponent();
             EstoyModificando = false;
-            articuloService = new ArticuloServices();
+            articuloService = new ArticuloService();
         }
-
 
         public ArticulosABM(int idArticuloAModificar)
         {
             InitializeComponent();
             CargarDatosArticuloParaModificar(idArticuloAModificar);
             EstoyModificando = true;
-            articuloService = new ArticuloServices();
+            articuloService = new ArticuloService();
         }
 
         private void CargarDatosArticuloParaModificar(int idArticuloAModificar)
@@ -57,11 +55,7 @@ namespace WinFormsAppStock.Vistas
             {
                 this.AgregarArticulo();
             }
-
-
         }
-
-    
 
         private void AgregarArticulo()
         {
@@ -73,7 +67,7 @@ namespace WinFormsAppStock.Vistas
             nuevoArticulo.Precio = Convert.ToDecimal(txtPrecio.Text);
             nuevoArticulo.Codigo = txtCodigo.Text;
 
-            ArticuloServices articuloServices = new ArticuloServices();
+            ArticuloService articuloServices = new ArticuloService();
             string mensaje = articuloServices.AgregarArticulo(nuevoArticulo);
 
             if (mensaje == "Articulo Agregado")
@@ -89,8 +83,6 @@ namespace WinFormsAppStock.Vistas
                 MessageBox.Show(mensaje);
             }
         }
-
-
         private void ModificarArticulo()
         {
             Articulo ArticuloAModificar = new Articulo();
@@ -101,7 +93,7 @@ namespace WinFormsAppStock.Vistas
             ArticuloAModificar.Proveedor = txtProveedor.Text;
             ArticuloAModificar.Precio = Convert.ToDecimal(txtPrecio.Text);
 
-            ArticuloServices articuloServices = new ArticuloServices();
+            ArticuloService articuloServices = new ArticuloService();
             string mensaje = articuloServices.ActualizarArticulo(ArticuloAModificar);
 
             if (mensaje == "Articulo Actualizado")
