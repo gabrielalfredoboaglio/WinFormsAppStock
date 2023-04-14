@@ -92,7 +92,7 @@ namespace CodigoComun.Repository
         {
             try
             {
-                string select = "SELECT Id, Nombre, Precio, Codigo FROM articulo";
+                string select = "SELECT Id, Nombre, Precio,Marca,MinimoStock,Proveedor, Codigo FROM articulo";
                 SqlCommand command = new SqlCommand(select);
                 DataTable dt = ac.execDT(command);
 
@@ -108,6 +108,9 @@ namespace CodigoComun.Repository
                     Articulo articulo = new Articulo();
                     articulo.Id = Convert.ToInt32(row["Id"]);
                     articulo.Nombre = row["Nombre"].ToString();
+                    articulo.Marca = row["Marca"].ToString();
+                    articulo.MinimoStock = Convert.ToInt32(row["MinimoStock"]);
+                    articulo.Proveedor = row["Proveedor"].ToString();
                     articulo.Precio = Convert.ToDecimal(row["Precio"]);
                     articulo.Codigo = row["Codigo"].ToString();
                     articulos.Add(articulo);
