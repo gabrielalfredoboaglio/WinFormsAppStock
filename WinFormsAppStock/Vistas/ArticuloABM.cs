@@ -35,14 +35,26 @@ namespace WinFormsAppStock.Vistas
 
         private void CargarDatosArticuloParaModificar(int idArticuloAModificar)
         {
+            ArticuloService articuloService = new ArticuloService();
             Articulo articuloConDatosDeLaBaseDeDatos = articuloService.GetArticuloPorId(idArticuloAModificar);
 
-            txtNombre.Text = articuloConDatosDeLaBaseDeDatos.Nombre;
-            txtMarca.Text = articuloConDatosDeLaBaseDeDatos.Marca;
-            txtMinimoStock.Text = articuloConDatosDeLaBaseDeDatos.MinimoStock.ToString();
-            txtProveedor.Text = articuloConDatosDeLaBaseDeDatos.Proveedor;
-            txtPrecio.Text = articuloConDatosDeLaBaseDeDatos.Precio.ToString();
+            if (articuloConDatosDeLaBaseDeDatos != null)
+            {
+                txtIdArticulo.Text = articuloConDatosDeLaBaseDeDatos.Id.ToString(); // <--- agregado
+                txtNombre.Text = articuloConDatosDeLaBaseDeDatos.Nombre;
+                txtMarca.Text = articuloConDatosDeLaBaseDeDatos.Marca;
+                txtMinimoStock.Text = articuloConDatosDeLaBaseDeDatos.MinimoStock.ToString();
+                txtProveedor.Text = articuloConDatosDeLaBaseDeDatos.Proveedor;
+                txtPrecio.Text = articuloConDatosDeLaBaseDeDatos.Precio.ToString();
+                txtCodigo.Text = articuloConDatosDeLaBaseDeDatos.Codigo; // <--- agregado
+            }
+            else
+            {
+                MessageBox.Show("No se pudo cargar el artículo para modificar.");
+            }
         }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -85,27 +97,27 @@ namespace WinFormsAppStock.Vistas
         }
         private void ModificarArticulo()
         {
-            Articulo ArticuloAModificar = new Articulo();
-            ArticuloAModificar.Id = Convert.ToInt32(txtPrecio.Text); // ID del artículo a modificar obtenido del campo txtPrecio
-            ArticuloAModificar.Nombre = txtNombre.Text;
-            ArticuloAModificar.Marca = txtMarca.Text;
-            ArticuloAModificar.MinimoStock = Convert.ToDecimal(txtMinimoStock.Text);
-            ArticuloAModificar.Proveedor = txtProveedor.Text;
-            ArticuloAModificar.Precio = Convert.ToDecimal(txtPrecio.Text);
+            Articulo articuloAModificar = new Articulo();
+            articuloAModificar.Id = Convert.ToInt32(txtIdArticulo.Text);
+            articuloAModificar.Nombre = txtNombre.Text;
+            articuloAModificar.Marca = txtMarca.Text;
+            articuloAModificar.MinimoStock = Convert.ToDecimal(txtMinimoStock.Text);
+            articuloAModificar.Proveedor = txtProveedor.Text;
+            articuloAModificar.Precio = Convert.ToDecimal(txtPrecio.Text);
 
             ArticuloService articuloServices = new ArticuloService();
-            string mensaje = articuloServices.ActualizarArticulo(ArticuloAModificar);
+            string mensaje = articuloServices.ActualizarArticulo(articuloAModificar);
 
             if (mensaje == "Articulo Actualizado")
             {
                 MessageBox.Show("Articulo modificado con exito");
-                this.Close(); // cierra la ventana después de modificar el artículo
+                this.Close();
             }
             else
             {
                 MessageBox.Show("Error modificando articulo");
             }
-
         }
+
     }
 }
