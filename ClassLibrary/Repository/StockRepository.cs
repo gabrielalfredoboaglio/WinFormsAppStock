@@ -25,12 +25,21 @@ namespace CodigoComun.Repository
         {
             using (var context = new StockAppContext())
             {
-                return context.Stocks
-                              .Include(s => s.ArticuloGuardado)
-                              .Include(s => s.DepositoDondeEstaGuardado)
-                              .FirstOrDefault(s => s.Id == stockId);
+                var stock = context.Stocks.FirstOrDefault(s => s.Id == stockId);
+                if (stock != null)
+                {
+                    var articulo = context.Stocks.FirstOrDefault(a => a.Id == stock.IdArticulo);
+                    stock.ArticuloGuardado = articulo;
+
+                    var deposito = context.Depositos.FirstOrDefault(d => d.Id == stock.IdDeposito);
+                    stock.DepositoDondeEstaGuardado = deposito;
+                }
+
+                return stock;
             }
         }
+
+
 
         public List<Stock> ObtenerTodosLosStocks()
         {
