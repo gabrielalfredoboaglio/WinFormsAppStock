@@ -1,4 +1,5 @@
-﻿using CodigoComun.Models;
+﻿using CodigoComun.Modelos.DTO;
+using CodigoComun.Models;
 using CodigoComun.Repository;
 using System;
 using System.Collections.Generic;
@@ -38,24 +39,36 @@ namespace CodigoComun.Negocio
             return depositoRepository.GetDepositoPorId(idDeposito);
         }
 
-        public int AddDeposito(Deposito depositoAAgregar)
+        public DepositoDTO AgregarDeposito(DepositoDTO depositoDTOAAgregar)
         {
+            DepositoRepository depositoRepository = new DepositoRepository();
+           
+            
             try
             {
-                using (var db = new StockAppContext())
+                var deposito = depositoDTOAAgregar.GetDeposito(depositoDTOAAgregar);
+               
+                int r = depositoRepository.AddDeposito(deposito);
+
+                if (r == 1)
                 {
-                    db.Depositos.Add(depositoAAgregar);
-                    return db.SaveChanges();
+                    depositoDTOAAgregar.Mensaje = "Depósito agregado";
+                    return depositoDTOAAgregar;
+                }
+                else
+                {
+                    depositoDTOAAgregar.Mensaje = "No se pudo agregar el depósito";
+                    return depositoDTOAAgregar;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al agregar depósito a la base de datos: {ex.Message}");
-                return -1;
+                depositoDTOAAgregar.HuboError = true;
+                depositoDTOAAgregar.Mensaje = $"Hubo una excepción dando de alta el depósito {ex.Message}";
+                return depositoDTOAAgregar;
             }
-
-
         }
+
 
 
         public Deposito ObtenerDepositoPorNombre(string nombreDeposito)

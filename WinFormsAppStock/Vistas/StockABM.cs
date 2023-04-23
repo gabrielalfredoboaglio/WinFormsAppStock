@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using CodigoComun.Modelos.DTO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Deposito = CodigoComun.Models.Deposito;

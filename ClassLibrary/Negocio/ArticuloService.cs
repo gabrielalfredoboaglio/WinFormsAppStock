@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CodigoComun.Datos;
+using CodigoComun.Modelos.DTO;
 
 namespace CodigoComun.Negocio
 {
@@ -20,37 +21,43 @@ namespace CodigoComun.Negocio
 
 
 
-        public string AgregarArticulo(Articulo ArticuloAAgregar)
+        public ArticuloDTO AgregarArticulo(ArticuloDTO articuloDTOAAgregar)
         {
-            ArticuloRepository articuloRepository = new ArticuloRepository();
-
             try
             {
-                // Validar que no exista un artículo con el mismo código
-                if (articuloRepository.GetArticuloPorCodigo(ArticuloAAgregar.Codigo) != null)
+                ArticuloRepository articuloRepository = new ArticuloRepository();
+
+                Articulo articuloAuxiliar = articuloRepository.GetArticuloPorId(articuloDTOAAgregar.Id);
+
+                if (articuloAuxiliar != null)
                 {
-                    return "Ya existe un artículo con ese código.";
+                    articuloDTOAAgregar.HuboError = true;
+                    articuloDTOAAgregar.Mensaje = $"Ya existe un articulo con ese Id {articuloDTOAAgregar.Id}";
+                    return articuloDTOAAgregar;
                 }
 
-                // Agregar el artículo a la base de datos
-                int r = articuloRepository.AddArticuloDB(ArticuloAAgregar);
+                Articulo articulo = articuloDTOAAgregar.GetArticulo(articuloDTOAAgregar);
+
+                int r = articuloRepository.AddArticuloDB(articulo);
 
                 if (r == 1)
                 {
-                    return "Articulo Agregado";
+                    articuloDTOAAgregar.Mensaje = "Articulo Agregado";
+                    return articuloDTOAAgregar;
                 }
                 else
                 {
-                    return "No se pudo Agregar el articulo";
+                    articuloDTOAAgregar.Mensaje = "No se pudo agregar el  Articulo";
+                    return articuloDTOAAgregar;
                 }
             }
             catch (Exception ex)
             {
-                // Retornar un mensaje de error detallado en caso de excepción
-                return $"Error al agregar el Articulo a la base de datos. Detalles del error: {ex.Message}";
+                articuloDTOAAgregar.HuboError = true;
+                articuloDTOAAgregar.Mensaje = $"Hubo una excepcion dando el alta del articulo {ex.Message}";
+                return articuloDTOAAgregar;
             }
         }
-
 
 
         public string ActualizarArticulo(Articulo articuloAActualizar)

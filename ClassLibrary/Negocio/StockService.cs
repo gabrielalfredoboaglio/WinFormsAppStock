@@ -1,4 +1,5 @@
-﻿using CodigoComun.Models;
+﻿using CodigoComun.Modelos.DTO;
+using CodigoComun.Models;
 using CodigoComun.Repository;
 
 public class StockService
@@ -10,9 +11,37 @@ public class StockService
         _stockRepository = stockRepository;
     }
 
-    public int AgregarStock(Stock stockAAgregar)
+    public StockDTO AgregarStock(StockDTO stockDTOAAgregar)
     {
-        return _stockRepository.AddStock(stockAAgregar);
+        try
+        {
+            var stock = stockDTOAAgregar.GetStock(stockDTOAAgregar);
+            int r = _stockRepository.AddStock(stock);
+
+            if (r == 1)
+            {
+                stockDTOAAgregar.Mensaje = "Stock Agregado";
+                return stockDTOAAgregar;
+            }
+
+            else
+            {
+                stockDTOAAgregar.HuboError = true;
+                stockDTOAAgregar.Mensaje = "No se pudo agregar el Stock";
+
+                return stockDTOAAgregar;
+            }
+
+        }
+
+        catch (Exception ex)
+        {
+            stockDTOAAgregar.HuboError = true;
+            stockDTOAAgregar.Mensaje =$"Ocurrio una excepcion agregando stock  {ex.Message}";   
+
+            return stockDTOAAgregar;
+
+        }
     }
 
     public Stock ObtenerStockPorId(int stockId)
