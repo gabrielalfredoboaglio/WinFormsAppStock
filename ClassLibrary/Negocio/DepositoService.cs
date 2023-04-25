@@ -11,43 +11,15 @@ namespace CodigoComun.Negocio
 {
     public class DepositoService
     {
-
-        public List<Deposito> ObtenerTodosLosDepositos()
-        {
-            DepositoRepository depositoRepository = new DepositoRepository();
-            return depositoRepository.GetTodosLosDepositos();
-        }
-
-        public string EliminarDeposito(int idDepositoEliminar)
-        {
-            DepositoRepository depositoRepository = new DepositoRepository();
-            int resultado = depositoRepository.EliminarDeposito(idDepositoEliminar);
-
-            if (resultado == 1)
-            {
-                return "Depósito eliminado correctamente";
-            }
-            else
-            {
-                return "Error al eliminar el depósito";
-            }
-        }
-
-        public Deposito ObtenerDepositoPorId(int idDeposito)
-        {
-            DepositoRepository depositoRepository = new DepositoRepository();
-            return depositoRepository.GetDepositoPorId(idDeposito);
-        }
-
         public DepositoDTO AgregarDeposito(DepositoDTO depositoDTOAAgregar)
         {
             DepositoRepository depositoRepository = new DepositoRepository();
-           
-            
+
+
             try
             {
                 var deposito = depositoDTOAAgregar.GetDeposito(depositoDTOAAgregar);
-               
+
                 int r = depositoRepository.AddDeposito(deposito);
 
                 if (r == 1)
@@ -71,29 +43,121 @@ namespace CodigoComun.Negocio
 
 
 
-        public Deposito ObtenerDepositoPorNombre(string nombreDeposito)
+        public DepositoDTO ModificarDeposito(DepositoDTO depositoAModificar)
+        {
+            try
+            {
+                Deposito deposito = depositoAModificar.GetDeposito(depositoAModificar);
+                DepositoRepository depositoRepository = new DepositoRepository();
+                int resultado = depositoRepository.ActualizarDeposito(deposito);
+
+                if (resultado == 1)
+                {
+                    depositoAModificar.Mensaje = "Deposito Actualizado";
+                    return depositoAModificar;
+                }
+                else
+                {
+                    depositoAModificar.HuboError = true;
+                    depositoAModificar.Mensaje = "No se pudo Actualizar el deposito";
+                    return depositoAModificar;
+                }
+            }
+            catch (Exception ex)
+            {
+                depositoAModificar.HuboError = true;
+                depositoAModificar.Mensaje = $"Hubo una excepcion actualizando el deposito {ex.Message}";
+                return depositoAModificar;
+            }
+        }
+
+        public DepositoDTO EliminarDeposito(int idDepositoEliminar)
+        {
+            try
+            {
+                DepositoRepository depositoRepository = new DepositoRepository();
+                int resultado = depositoRepository.EliminarDeposito(idDepositoEliminar);
+
+                if (resultado == 1)
+                {
+                    return new DepositoDTO { Mensaje = "Depósito eliminado correctamente" };
+                }
+                else
+                {
+                    return new DepositoDTO { Mensaje = "Error al eliminar el depósito" };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new DepositoDTO { HuboError = true, Mensaje = $"Hubo una excepción eliminando el depósito: {ex.Message}" };
+            }
+        }
+
+
+        public List<DepositoDTO> ObtenerTodosLosDepositos()
         {
             DepositoRepository depositoRepository = new DepositoRepository();
-            return depositoRepository.GetDepositoPorNombre(nombreDeposito);
+            var depositos = depositoRepository.GetTodosLosDepositos();
+            var depositosDTO = new List<DepositoDTO>();
+
+            foreach (var deposito in depositos)
+            {
+                depositosDTO.Add(new DepositoDTO
+                {
+                    Id = deposito.Id,
+                    Capacidad = deposito.Capacidad,
+                    Nombre = deposito.Nombre,
+                    Direccion = deposito.Direccion,
+                   
+                });
+            }
+
+            return depositosDTO;
         }
 
 
 
-        public int ModificarDeposito(Deposito depositoAModificar)
+
+        public DepositoDTO ObtenerDepositoPorId(int idDeposito)
         {
             DepositoRepository depositoRepository = new DepositoRepository();
-            int resultado = depositoRepository.ActualizarDeposito(depositoAModificar);
+            var deposito = depositoRepository.GetDepositoPorId(idDeposito);
 
-            if (resultado == 1)
+            if (deposito == null)
             {
-                return resultado;
+                throw new Exception($"No se encontró el Depósito con Id {idDeposito}");
             }
-            else
+
+            return new DepositoDTO
             {
-                return -1;
-            }
+                Id = deposito.Id,
+                Capacidad = deposito.Capacidad,
+                Nombre = deposito.Nombre,
+                Direccion = deposito.Direccion,
+              
+            };
         }
 
+
+
+
+        public DepositoDTO ObtenerDepositoPorNombre(string nombreDeposito)
+        {
+            DepositoRepository depositoRepository = new DepositoRepository();
+            Deposito deposito = depositoRepository.GetDepositoPorNombre(nombreDeposito);
+            if (deposito == null)
+            {
+                throw new Exception($"No se encontró el depósito con nombre {nombreDeposito}");
+            }
+
+            return new DepositoDTO
+            {
+                Id = deposito.Id,
+                Capacidad = deposito.Capacidad,
+                Nombre = deposito.Nombre,
+                Direccion = deposito.Direccion
+            };
+        }
     }
 }
 

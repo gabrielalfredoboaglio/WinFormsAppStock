@@ -43,50 +43,101 @@ public class StockService
 
         }
     }
-
-    public Stock ObtenerStockPorId(int stockId)
+    public StockDTO ActualizarStock(StockDTO stockAActualizar)
     {
-        return _stockRepository.GetStockPorId(stockId);
-    }
-
-    public List<Stock> ObtenerTodosLosStocks()
-    {
-        return _stockRepository.ObtenerTodosLosStocks();
-    }
-
-
-    public string EliminarStock(int idStockEliminar)
-    {
-        int resultado = _stockRepository.EliminarStock(idStockEliminar);
-
-        if (resultado == 1)
+        try
         {
-            return "Stock eliminado correctamente";
+            Stock stock = stockAActualizar.GetStock(stockAActualizar);
+            StockRepository stockRepository = new StockRepository();
+            int resultado = stockRepository.ActualizarStock(stock);
+
+            if (resultado == 1)
+            {
+                stockAActualizar.Mensaje = "Stock actualizado correctamente";
+                return stockAActualizar;
+            }
+            else
+            {
+                stockAActualizar.HuboError = true;
+                stockAActualizar.Mensaje = "Error al actualizar el stock";
+                return stockAActualizar;
+            }
         }
-        else if (resultado == 0)
+        catch (Exception ex)
         {
-            return "No se encontró el stock a eliminar";
+            stockAActualizar.HuboError = true;
+            stockAActualizar.Mensaje = $"Hubo una excepcion actualizando el stock: {ex.Message}";
+            return stockAActualizar;
+        }
+    }
+    public StockDTO EliminarStock(int idStockEliminar)
+    {
+        try
+        {
+            int resultado = _stockRepository.EliminarStock(idStockEliminar);
+
+            if (resultado == 1)
+            {
+                return new StockDTO { Mensaje = "Stock eliminado correctamente" };
+            }
+            else if (resultado == 0)
+            {
+                return new StockDTO { Mensaje = "No se encontró el stock a eliminar" };
+            }
+            else
+            {
+                return new StockDTO { Mensaje = "Error al eliminar el stock" };
+            }
+        }
+        catch (Exception ex)
+        {
+            return new StockDTO { HuboError = true, Mensaje = $"Hubo una excepción eliminando el stock: {ex.Message}" };
+        }
+    }
+
+    public StockDTO ObtenerStockPorId(int stockId)
+    {
+        StockRepository stockRepository = new StockRepository();
+        Stock stock = stockRepository.GetStockPorId(stockId);
+
+        if (stock != null)
+        {
+            return new StockDTO
+            {
+                Id = stock.Id,
+                IdArticulo = stock.IdArticulo,
+                IdDeposito = stock.IdDeposito,
+                Cantidad = stock.Cantidad
+            };
         }
         else
         {
-            return "Error al eliminar el stock";
+            return null;
         }
     }
-    public string ActualizarStock(Stock stockAModificar)
-{
-    StockRepository stockRepository = new StockRepository();
-    int resultado = stockRepository.ActualizarStock(stockAModificar);
 
-    if (resultado == 1)
+    public List<StockDTO> ObtenerTodosLosStocks()
     {
-        return "Stock actualizado correctamente";
-    }
-    else
-    {
-        return "Error al actualizar el stock";
+        var stocks = _stockRepository.ObtenerTodosLosStocks();
+        var stocksDTO = new List<StockDTO>();
+
+        foreach (var stock in stocks)
+        {
+            stocksDTO.Add(new StockDTO
+            {
+                Id = stock.Id,
+                IdArticulo = stock.IdArticulo,
+                IdDeposito = stock.IdDeposito,
+                Cantidad = stock.Cantidad
+            });
+        }
+
+        return stocksDTO;
     }
 
 
-}
+
+
+
 
 }
