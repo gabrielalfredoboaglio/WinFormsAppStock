@@ -39,13 +39,42 @@ namespace WinFormsAppStock.Vistas
             StockABM stockABM = new StockABM();
             stockABM.Show();
         }
-        private void CargarStocks()
+         private void CargarStocks()
         {
             StockRepository stockRepository = new StockRepository();
             StockService stockServices = new StockService(stockRepository);
             List<StockDTO> stocksDeLaBaseDeDatos = stockServices.ObtenerTodosLosStocks();
-            dgvStock.DataSource = stocksDeLaBaseDeDatos;
+            ArticuloService articuloService = new ArticuloService();
+            DepositoService depositoService = new DepositoService();
+            List<ArticuloDTO> articulos = articuloService.ObtenerTodosLosArticulos();
+            List<DepositoDTO> depositos = depositoService.ObtenerTodosLosDepositos();
+
+            dgvStock.Columns.Clear(); // Limpiamos las columnas de la grilla
+
+            dgvStock.Columns.Add("Id", "Id"); // Agregamos la columna Id
+            dgvStock.Columns.Add("IdArticulo", "IdArticulo"); // Agregamos la columna IdArticulo
+            dgvStock.Columns.Add("IdDeposito", "IdDeposito"); // Agregamos la columna IdDeposito
+            dgvStock.Columns.Add("NombreArticulo", "NombreArticulo"); // Agregamos la columna NombreArticulo
+            dgvStock.Columns.Add("NombreDeposito", "NombreDeposito"); // Agregamos la columna NombreDeposito
+            dgvStock.Columns.Add("CodigoArticulo", "CodigoArticulo"); // Agregamos la columna CodigoArticulo
+
+            dgvStock.Rows.Clear();
+
+            foreach (var stockDTO in stocksDeLaBaseDeDatos)
+            {
+                int rowIndex = dgvStock.Rows.Add(
+                    stockDTO.Id,
+                    stockDTO.IdArticulo,
+                    stockDTO.IdDeposito,
+                    articulos.FirstOrDefault(a => a.Id == stockDTO.IdArticulo)?.Nombre,
+                    depositos.FirstOrDefault(d => d.Id == stockDTO.IdDeposito)?.Nombre,
+                    articulos.FirstOrDefault(a => a.Id == stockDTO.IdArticulo)?.Codigo
+                );
+
+                dgvStock.Rows[rowIndex].Tag = stockDTO;
+            }
         }
+
 
 
         private void button2_Click_1(object sender, EventArgs e)

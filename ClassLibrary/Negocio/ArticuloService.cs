@@ -88,24 +88,6 @@ namespace CodigoComun.Negocio
             }
         }
 
-
-        public ArticuloDTO EliminarArticulo(int idArticuloEliminar)
-        {
-            ArticuloRepository articuloRepository = new ArticuloRepository();
-            int resultado = articuloRepository.EliminarEnDb(idArticuloEliminar);
-
-            if (resultado == 1)
-            {
-                return new ArticuloDTO { Mensaje = "Articulo eliminado correctamente" };
-            }
-            else
-            {
-                return new ArticuloDTO { Mensaje = "Error al eliminar el articulo" };
-            }
-        }
-
-
-
         public List<ArticuloDTO> ObtenerTodosLosArticulos()
         {
             var articulos = articuloRepository.GetTodosLosArticulos();
@@ -127,6 +109,24 @@ namespace CodigoComun.Negocio
 
             return articulosDTO;
         }
+        public ArticuloDTO EliminarArticulo(int idArticuloEliminar)
+        {
+            ArticuloRepository articuloRepository = new ArticuloRepository();
+            int resultado = articuloRepository.EliminarEnDb(idArticuloEliminar);
+
+            if (resultado == 1)
+            {
+                return new ArticuloDTO { Mensaje = "Articulo eliminado correctamente" };
+            }
+            else
+            {
+                return new ArticuloDTO { Mensaje = "Error al eliminar el articulo" };
+            }
+        }
+
+
+
+       
 
         public ArticuloDTO GetArticuloPorId(int articuloId)
         {
