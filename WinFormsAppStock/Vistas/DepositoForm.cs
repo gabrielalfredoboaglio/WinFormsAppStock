@@ -37,14 +37,15 @@ namespace WinFormsAppStock.Vistas
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtIdDeposito.Text))
             {
-                {
-                    int IdDepositoAmodificar = Convert.ToInt32(txtIdDeposito.Text);
-
-                    DepositoABM depositosABMModoModificacion = new DepositoABM(IdDepositoAmodificar);
-                    depositosABMModoModificacion.Show();
-                }
+                MessageBox.Show("Por favor ingrese un ID de depósito válido.");
+                return;
             }
+
+            int IdDepositoAmodificar = Convert.ToInt32(txtIdDeposito.Text);
+            DepositoABM depositosABMModoModificacion = new DepositoABM(IdDepositoAmodificar);
+            depositosABMModoModificacion.Show();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -56,13 +57,20 @@ namespace WinFormsAppStock.Vistas
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            // Obtener el Id del Deposito a eliminar
+            // Validar que se haya ingresado un Id válido
+            if (string.IsNullOrWhiteSpace(txtIdDeposito.Text))
+            {
+                MessageBox.Show("Debe ingresar un Id de Depósito válido.");
+                return;
+            }
+
+            // Obtener el Id del Depósito a eliminar
             int idDeposito = Convert.ToInt32(txtIdDeposito.Text);
 
             // Instanciar un objeto DepositoServices
             DepositoService depositoServices = new DepositoService();
 
-            // Llamar al método EliminarDeposito del objeto DepositoServices, pasando el Id del Deposito a eliminar
+            // Llamar al método EliminarDeposito del objeto DepositoServices, pasando el Id del Depósito a eliminar
             DepositoDTO resultado = depositoServices.EliminarDeposito(idDeposito);
 
             if (resultado.Mensaje == "Depósito eliminado correctamente")
@@ -76,6 +84,7 @@ namespace WinFormsAppStock.Vistas
                 MessageBox.Show(resultado.Mensaje);
             }
         }
+
 
     }
 }

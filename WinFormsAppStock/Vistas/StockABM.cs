@@ -49,8 +49,6 @@ namespace WinFormsAppStock.Vistas
 
         }
 
-
-
         private void CargarComboBoxes()
         {
             // Cargar los datos de los ComboBoxes
@@ -101,14 +99,7 @@ namespace WinFormsAppStock.Vistas
             }
         }
 
-
-
-
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            btnAgregar_Click(sender, e);
-        }
+        
         private void btnModificar_Click(object sender, EventArgs e)
         {
             // Obtener los datos del Stock a modificar
@@ -148,7 +139,10 @@ namespace WinFormsAppStock.Vistas
                 MessageBox.Show("La cantidad ingresada no es válida");
             }
         }
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            btnAgregar_Click(sender, e);
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {

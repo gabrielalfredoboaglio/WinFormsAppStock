@@ -35,6 +35,12 @@ namespace WinFormsAppStock.Vistas
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtIdArticulo.Text))
+            {
+                MessageBox.Show("Ingrese un Id de articulo válido");
+                return;
+            }
+
             int idArticulo = Convert.ToInt32(txtIdArticulo.Text);
             ArticuloService articuloService = new ArticuloService();
             ArticuloDTO resultado = articuloService.EliminarArticulo(idArticulo);
@@ -49,14 +55,21 @@ namespace WinFormsAppStock.Vistas
             }
         }
 
+
         private void button3_Click(object sender, EventArgs e)
         {
-            int IdArticuloAmodificar = Convert.ToInt32(txtIdArticulo.Text);
+            if (string.IsNullOrWhiteSpace(txtIdArticulo.Text))
+            {
+                MessageBox.Show("Debe ingresar un Id de artículo válido para modificarlo.");
+                return;
+            }
 
+            int IdArticuloAmodificar = Convert.ToInt32(txtIdArticulo.Text);
             ArticuloABM articulosABMModoModificacion = new ArticuloABM(IdArticuloAmodificar);
             articulosABMModoModificacion.Show();
         }
 
-      
+
+
     }
 }
