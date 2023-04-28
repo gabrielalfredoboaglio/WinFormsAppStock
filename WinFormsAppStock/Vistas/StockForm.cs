@@ -77,8 +77,10 @@ namespace WinFormsAppStock.Vistas
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            StockABM stockABM = new StockABM();
-            stockABM.Show();
+            int IdStockAmodificar = Convert.ToInt32(txtIdStock.Text);
+
+            StockABM stocksABMModoModificacion = new StockABM(IdStockAmodificar);
+            stocksABMModoModificacion.Show();
         }
 
     }

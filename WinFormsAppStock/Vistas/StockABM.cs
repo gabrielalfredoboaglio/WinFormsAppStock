@@ -48,35 +48,6 @@ namespace WinFormsAppStock.Vistas
 
         }
 
-        private void btnModificar_Click(object sender, EventArgs e)
-        {
-            ModificarStock();
-        }
-
-            private void ModificarStock()
-        {
-            int id = Convert.ToInt32(txtIdStockModificar.Text);
-
-            // Obtener el objeto Articulo correspondiente al nombre seleccionado en el ComboBox
-            ArticuloDTO articulo = new ArticuloService().GetArticuloPorNombre(txtIdComboboxArticulo.Text);
-
-            // Obtener el objeto Deposito correspondiente al nombre seleccionado en el ComboBox
-            DepositoDTO deposito = new DepositoService().ObtenerDepositoPorNombre(txtComboBoxDeposito.Text);
-
-            decimal cantidad = Convert.ToDecimal(txtCantidad.Text);
-
-            StockDTO stock = new StockDTO
-            {
-                Id = id,
-                IdArticulo = articulo.Id,
-                IdDeposito = deposito.Id,
-                Cantidad = cantidad
-            };
-
-            _stockService.ActualizarStock(stock);
-
-            MessageBox.Show("El stock ha sido modificado correctamente.");
-        }
 
 
         private void CargarComboBoxes()
@@ -137,6 +108,46 @@ namespace WinFormsAppStock.Vistas
         {
             btnAgregar_Click(sender, e);
         }
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            // Obtener los datos del Stock a modificar
+            int idStockAModificar = Convert.ToInt32(txtIdStockModificar.Text);
+            decimal cantidad;
+            if (decimal.TryParse(txtCantidad.Text, out cantidad))
+            {
+                // Obtener el StockDTO del Stock a modificar
+                StockDTO stockAModificar = _stockService.ObtenerStockPorId(idStockAModificar);
+
+                // Obtener el Id de Articulo y el Id de Deposito correspondientes al Stock que se está modificando
+                int idArticulo = (int)stockAModificar.IdArticulo;
+                int idDeposito = (int)stockAModificar.IdDeposito;
+
+                // Convertir el objeto Stock a StockDTO
+                StockDTO stockDTO = new StockDTO
+                {
+                    Id = idStockAModificar,
+                    IdArticulo = idArticulo,
+                    IdDeposito = idDeposito,
+                    Cantidad = cantidad
+                };
+
+                // Modificar el registro de stock en la base de datos
+                StockDTO resultado = _stockService.ActualizarStock(stockDTO);
+                if (!resultado.HuboError)
+                {
+                    MessageBox.Show(resultado.Mensaje);
+                }
+                else
+                {
+                    MessageBox.Show(resultado.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("La cantidad ingresada no es válida");
+            }
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
