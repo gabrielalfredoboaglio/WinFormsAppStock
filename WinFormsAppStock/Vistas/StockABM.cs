@@ -22,21 +22,22 @@ namespace WinFormsAppStock.Vistas
     public partial class StockABM : Form
     {
         private readonly StockService _stockService;
+        public int IdStock { get; set; }
 
         public StockABM()
         {
             InitializeComponent();
             _stockService = new StockService(new StockRepository());
             CargarComboBoxes();
-
         }
 
         public StockABM(int idStockAModificar)
         {
             InitializeComponent();
             _stockService = new StockService(new StockRepository());
-            CargarDatosStockParaModificar(idStockAModificar);
-
+            IdStock = idStockAModificar;
+            CargarDatosStockParaModificar(IdStock);
+            txtIdStock.Text = IdStock.ToString();
         }
         private void CargarDatosStockParaModificar(int idStockAModificar)
         {
@@ -111,7 +112,7 @@ namespace WinFormsAppStock.Vistas
         private void btnModificar_Click(object sender, EventArgs e)
         {
             // Obtener los datos del Stock a modificar
-            int idStockAModificar = Convert.ToInt32(txtIdStockModificar.Text);
+            int idStockAModificar = Convert.ToInt32(txtIdStock.Text);
             decimal cantidad;
             if (decimal.TryParse(txtCantidad.Text, out cantidad))
             {

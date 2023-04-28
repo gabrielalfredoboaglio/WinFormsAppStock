@@ -32,7 +32,7 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            txtIdStockModificar = new TextBox();
+            txtIdStock = new TextBox();
             txtCantidad = new TextBox();
             txtIdComboboxArticulo = new ComboBox();
             txtComboBoxDeposito = new ComboBox();
@@ -80,13 +80,13 @@
             label3.TabIndex = 9;
             label3.Text = "Cantidad";
             // 
-            // txtIdStockModificar
+            // txtIdStock
             // 
-            txtIdStockModificar.Location = new Point(297, 64);
-            txtIdStockModificar.Margin = new Padding(4);
-            txtIdStockModificar.Name = "txtIdStockModificar";
-            txtIdStockModificar.Size = new Size(186, 35);
-            txtIdStockModificar.TabIndex = 10;
+            txtIdStock.Location = new Point(297, 64);
+            txtIdStock.Margin = new Padding(4);
+            txtIdStock.Name = "txtIdStock";
+            txtIdStock.Size = new Size(186, 35);
+            txtIdStock.TabIndex = 10;
             // 
             // txtCantidad
             // 
@@ -144,7 +144,7 @@
             Controls.Add(txtComboBoxDeposito);
             Controls.Add(txtIdComboboxArticulo);
             Controls.Add(txtCantidad);
-            Controls.Add(txtIdStockModificar);
+            Controls.Add(txtIdStock);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -161,7 +161,7 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private TextBox txtIdStockModificar;
+        private TextBox txtIdStock;
         private TextBox txtCantidad;
         private ComboBox txtIdComboboxArticulo;
         private ComboBox txtComboBoxDeposito;
