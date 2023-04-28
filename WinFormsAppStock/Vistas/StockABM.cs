@@ -40,11 +40,12 @@ namespace WinFormsAppStock.Vistas
         }
         private void CargarDatosStockParaModificar(int idStockAModificar)
         {
-            Stock stockConDatosDeLaBaseDeDatos = _stockService.ObtenerStockPorId(idStockAModificar);
+            StockDTO stockConDatosDeLaBaseDeDatos = _stockService.ObtenerStockPorId(idStockAModificar);
 
             txtIdComboboxArticulo.Text = stockConDatosDeLaBaseDeDatos.IdArticulo.ToString();
             txtComboBoxDeposito.Text = stockConDatosDeLaBaseDeDatos.IdDeposito.ToString();
             txtCantidad.Text = stockConDatosDeLaBaseDeDatos.Cantidad.ToString();
+
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -52,19 +53,19 @@ namespace WinFormsAppStock.Vistas
             ModificarStock();
         }
 
-        private void ModificarStock()
+            private void ModificarStock()
         {
             int id = Convert.ToInt32(txtIdStockModificar.Text);
 
             // Obtener el objeto Articulo correspondiente al nombre seleccionado en el ComboBox
-            Articulo articulo = new ArticuloService().ObtenerArticuloPorNombre(txtIdComboboxArticulo.Text);
+            ArticuloDTO articulo = new ArticuloService().GetArticuloPorNombre(txtIdComboboxArticulo.Text);
 
             // Obtener el objeto Deposito correspondiente al nombre seleccionado en el ComboBox
-            Deposito deposito = new DepositoService().ObtenerDepositoPorNombre(txtComboBoxDeposito.Text);
+            DepositoDTO deposito = new DepositoService().ObtenerDepositoPorNombre(txtComboBoxDeposito.Text);
 
             decimal cantidad = Convert.ToDecimal(txtCantidad.Text);
 
-            Stock stock = new Stock
+            StockDTO stock = new StockDTO
             {
                 Id = id,
                 IdArticulo = articulo.Id,
@@ -76,6 +77,7 @@ namespace WinFormsAppStock.Vistas
 
             MessageBox.Show("El stock ha sido modificado correctamente.");
         }
+
 
         private void CargarComboBoxes()
         {
@@ -101,15 +103,23 @@ namespace WinFormsAppStock.Vistas
                 // La conversión fue exitosa, la variable "cantidad" contiene el valor convertido
                 nuevoStock.Cantidad = cantidad;
 
-                // Agrega el nuevo registro de stock a la base de datos
-                int resultado = _stockService.AgregarStock(nuevoStock);
-                if (resultado >= 1)
+                // Convertir el objeto Stock a StockDTO
+                StockDTO stockDTO = new StockDTO
                 {
-                    MessageBox.Show("Registro de stock agregado correctamente a la base de datos.");
+                    IdArticulo = nuevoStock.IdArticulo,
+                    IdDeposito = nuevoStock.IdDeposito,
+                    Cantidad = nuevoStock.Cantidad
+                };
+
+                // Agrega el nuevo registro de stock a la base de datos
+                StockDTO resultado = _stockService.AgregarStock(stockDTO);
+                if (!resultado.HuboError)
+                {
+                    MessageBox.Show(resultado.Mensaje);
                 }
                 else
                 {
-                    MessageBox.Show("Error al agregar el registro de stock a la base de datos.");
+                    MessageBox.Show(resultado.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -118,6 +128,10 @@ namespace WinFormsAppStock.Vistas
                 MessageBox.Show("La cantidad ingresada no es válida");
             }
         }
+
+
+
+
 
         private void button2_Click(object sender, EventArgs e)
         {

@@ -17,18 +17,18 @@ namespace WinFormsAppStock
             articulosForm.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+
+        private void button2_Click_1(object sender, EventArgs e)
         {
             DepositoForm depositoForm = new DepositoForm();
             depositoForm.Show();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click_1(object sender, EventArgs e)
         {
             StockForm stockForm = new StockForm();
             stockForm.Show();
         }
-
-       
     }
 }

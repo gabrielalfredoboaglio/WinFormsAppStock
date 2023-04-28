@@ -1,4 +1,5 @@
-﻿using CodigoComun.Models;
+﻿using CodigoComun.Modelos.DTO;
+using CodigoComun.Models;
 using CodigoComun.Negocio;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace WinFormsAppStock.Vistas
         private void CargarDepositos()
         {
             DepositoService depositoServices = new DepositoService();
-            List<Deposito> depositoDeLaBaseDeDatos = depositoServices.ObtenerTodosLosDepositos();
+            List<DepositoDTO> depositoDeLaBaseDeDatos = depositoServices.ObtenerTodosLosDepositos();
             dgvDepositos.DataSource = depositoDeLaBaseDeDatos;
         }
 
@@ -62,18 +63,19 @@ namespace WinFormsAppStock.Vistas
             DepositoService depositoServices = new DepositoService();
 
             // Llamar al método EliminarDeposito del objeto DepositoServices, pasando el Id del Deposito a eliminar
-            string resultado = depositoServices.EliminarDeposito(idDeposito);
+            DepositoDTO resultado = depositoServices.EliminarDeposito(idDeposito);
 
-            if (resultado == "Articulo eliminado correctamente")
+            if (resultado.Mensaje == "Depósito eliminado correctamente")
             {
                 // Mostrar un mensaje de confirmación
-                MessageBox.Show(resultado);
+                MessageBox.Show(resultado.Mensaje);
             }
             else
             {
                 // Mostrar un mensaje de error
-                MessageBox.Show(resultado);
+                MessageBox.Show(resultado.Mensaje);
             }
         }
+
     }
-    }
+}

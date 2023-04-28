@@ -1,5 +1,7 @@
-﻿using CodigoComun.Models;
+﻿using CodigoComun.Modelos.DTO;
+using CodigoComun.Models;
 using CodigoComun.Negocio;
+using CodigoComun.Repository;
 using System;
 using System.Windows.Forms;
 
@@ -22,15 +24,15 @@ namespace WinFormsAppStock.Vistas
             CargarDatosDepositoParaModificar(idDepositoAModificar);
             EstoyModificando = true;
         }
-            
+
         private void CargarDatosDepositoParaModificar(int idDepositoAModificar)
         {
             DepositoService depositoServices = new DepositoService();
-            Deposito depositoConDatosDeLaBaseDeDatos = depositoServices.ObtenerDepositoPorId(idDepositoAModificar);
+            DepositoDTO depositoConDatosDeLaBaseDeDatos = depositoServices.ObtenerDepositoPorId(idDepositoAModificar);
 
             if (depositoConDatosDeLaBaseDeDatos != null)
             {
-                txtIdDeposito.Text = depositoConDatosDeLaBaseDeDatos.Id.ToString(); // <--- agregado
+                txtIdDeposito.Text = depositoConDatosDeLaBaseDeDatos.Id.ToString();
                 txtNombre.Text = depositoConDatosDeLaBaseDeDatos.Nombre;
                 txtDireccion.Text = depositoConDatosDeLaBaseDeDatos.Direccion;
                 txtCapacidad.Text = depositoConDatosDeLaBaseDeDatos.Capacidad.ToString();
@@ -41,12 +43,13 @@ namespace WinFormsAppStock.Vistas
             }
         }
 
-        private void ModificarDeposito()
+
+         private void ModificarDeposito()
         {
             DepositoService depositoServices = new DepositoService();
 
-            // Crear un objeto Deposito y establecer sus propiedades
-            Deposito depositoAModificar = new Deposito();
+            // Crear un objeto DepositoDTO y establecer sus propiedades
+            DepositoDTO depositoAModificar = new DepositoDTO();
             depositoAModificar.Nombre = txtNombre.Text;
             depositoAModificar.Direccion = txtDireccion.Text;
             depositoAModificar.Capacidad = Convert.ToDecimal(txtCapacidad.Text);
@@ -61,65 +64,85 @@ namespace WinFormsAppStock.Vistas
 
             depositoAModificar.Id = idDeposito;
 
-            // Llamar al método ActualizarEnDb y pasar el objeto Deposito como argumento
-            Deposito depositoAuxiliar = new Deposito();
-            int resultado = depositoServices.ModificarDeposito(depositoAModificar);
-
-            if (resultado == 1)
-            {
-                Console.WriteLine("Depósito modificado con éxito.");
-            }
-            else
-            {
-                Console.WriteLine("Error modificando depósito.");
-            }
-
+            // Llamar al método ModificarDeposito y pasar el objeto DepositoDTO como argumento
+            DepositoDTO resultado = depositoServices.ModificarDeposito(depositoAModificar);
 
             // Manejar el resultado de la actualización
-            if (resultado == 1)
+            if (!resultado.HuboError)
             {
-                MessageBox.Show("Depósito modificado con éxito.");
+                MessageBox.Show(resultado.Mensaje);
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Error modificando depósito.");
+                MessageBox.Show(resultado.Mensaje);
             }
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
-            if (EstoyModificando == true)
+            if (EstoyModificando)
             {
                 ModificarDeposito();
             }
             else
             {
-                this.AgregarDeposito();
+                DepositoDTO depositoDTOAAgregar = new DepositoDTO();
+                depositoDTOAAgregar.Nombre = txtNombre.Text;
+                depositoDTOAAgregar.Direccion = txtDireccion.Text;
+                depositoDTOAAgregar.Capacidad = Convert.ToDecimal(txtCapacidad.Text);
+
+                DepositoService depositoServices = new DepositoService();
+                var resultado = depositoServices.AgregarDeposito(depositoDTOAAgregar);
+
+                if (!resultado.HuboError)
+                {
+                    MessageBox.Show(resultado.Mensaje);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show(resultado.Mensaje);
+                }
             }
         }
-        private void AgregarDeposito()
+
+        public DepositoDTO AgregarDeposito(DepositoDTO depositoDTOAAgregar)
         {
-            DepositoService depositoServices = new DepositoService();
+            DepositoRepository depositoRepository = new DepositoRepository();
 
-            Deposito nuevoDeposito = new Deposito();
-            nuevoDeposito.Nombre = txtNombre.Text;
-            nuevoDeposito.Capacidad = Convert.ToDecimal(txtCapacidad.Text);
-            nuevoDeposito.Direccion = txtDireccion.Text;
-
-            // Agrega el nuevo depósito a la base de datos
-            int resultado = depositoServices.AddDeposito(nuevoDeposito);
-            if (resultado >= 1)
+            try
             {
-                MessageBox.Show("Depósito agregado correctamente a la base de datos.");
+                // Obtener un objeto Deposito a partir del objeto DepositoDTO
+                var deposito = depositoDTOAAgregar.GetDeposito(depositoDTOAAgregar);
+
+                // Agregar el nuevo depósito a la base de datos
+                int resultado = depositoRepository.AddDeposito(deposito);
+
+                // Manejar el resultado de la operación
+                if (resultado == 1)
+                {
+                    depositoDTOAAgregar.Mensaje = "Depósito agregado correctamente a la base de datos.";
+                    return depositoDTOAAgregar;
+                }
+                else
+                {
+                    depositoDTOAAgregar.HuboError = true;
+                    depositoDTOAAgregar.Mensaje = "Error al agregar el depósito a la base de datos.";
+                    return depositoDTOAAgregar;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Error al agregar el depósito a la base de datos.");
+                depositoDTOAAgregar.HuboError = true;
+                depositoDTOAAgregar.Mensaje = $"Hubo una excepción dando de alta el depósito: {ex.Message}";
+                return depositoDTOAAgregar;
             }
         }
+
     }
-    }
+}
 
 
 

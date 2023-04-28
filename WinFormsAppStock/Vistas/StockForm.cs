@@ -14,6 +14,8 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Stock = CodigoComun.Models.Stock;
 using CodigoComun.Negocio;
+using CodigoComun.Modelos.DTO;
+
 namespace WinFormsAppStock.Vistas
 {
     public partial class StockForm : Form
@@ -41,7 +43,7 @@ namespace WinFormsAppStock.Vistas
         {
             StockRepository stockRepository = new StockRepository();
             StockService stockServices = new StockService(stockRepository);
-            List<Stock> stocksDeLaBaseDeDatos = stockServices.ObtenerTodosLosStocks();
+            List<StockDTO> stocksDeLaBaseDeDatos = stockServices.ObtenerTodosLosStocks();
             dgvStock.DataSource = stocksDeLaBaseDeDatos;
         }
 
@@ -58,26 +60,27 @@ namespace WinFormsAppStock.Vistas
             StockService stockService = new StockService(stockRepo);
 
             // Llamar al método EliminarStock del objeto StockService, pasando el Id del Stock a eliminar
-            string resultado = stockService.EliminarStock(idStock);
+            StockDTO resultado = stockService.EliminarStock(idStock);
 
-            if (resultado == "Stock eliminado correctamente")
+            if (!resultado.HuboError)
             {
                 // Mostrar un mensaje de confirmación
-                MessageBox.Show("El registro de stock ha sido eliminado correctamente.");
+                MessageBox.Show(resultado.Mensaje);
             }
             else
             {
                 // Mostrar un mensaje de error
-                MessageBox.Show(resultado);
+                MessageBox.Show(resultado.Mensaje);
             }
         }
+
 
         private void Button1_Click(object sender, EventArgs e)
         {
             StockABM stockABM = new StockABM();
             stockABM.Show();
         }
-      
+
     }
 }
 

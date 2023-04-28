@@ -1,4 +1,4 @@
-﻿using CodigoComun.Modelos;
+﻿using CodigoComun.Modelos.DTO;
 using CodigoComun.Negocio;
 using CodigoComun.Repository;
 using System;
@@ -23,9 +23,10 @@ namespace WinFormsAppStock.Vistas
         private void CargarArticulos()
         {
             ArticuloService articuloServices = new ArticuloService();
-            List<Articulo> articulos = articuloServices.ObtenerTodosLosArticulos();
-            dgvArticulos.DataSource = articulos;
+            List<ArticuloDTO> articulosDTO = articuloServices.ObtenerTodosLosArticulos();
+            dgvArticulos.DataSource = articulosDTO;
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -34,26 +35,20 @@ namespace WinFormsAppStock.Vistas
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            // Obtener el Id del Articulo a eliminar
             int idArticulo = Convert.ToInt32(txtIdArticulo.Text);
+            ArticuloService articuloService = new ArticuloService();
+            ArticuloDTO resultado = articuloService.EliminarArticulo(idArticulo);
 
-            // Instanciar un objeto ArticuloRepository
-            ArticuloRepository articuloRepository = new ArticuloRepository();
-
-            // Llamar al método EliminarEnDb del objeto ArticuloRepository, pasando el Id del Articulo a eliminar
-            int resultado = articuloRepository.EliminarEnDb(idArticulo);
-
-            if (resultado != -1)
+            if (resultado.Mensaje == "Articulo eliminado correctamente")
             {
-                // Mostrar un mensaje de confirmación
-                MessageBox.Show("El Articulo ha sido eliminado correctamente");
+                MessageBox.Show("El articulo se eliminó correctamente.");
             }
             else
             {
-                // Mostrar un mensaje de error
-                MessageBox.Show("Ha ocurrido un error al eliminar el Articulo");
+                MessageBox.Show("Hubo un error al eliminar el articulo.");
             }
         }
+
         private void button3_Click(object sender, EventArgs e)
         {
             int IdArticuloAmodificar = Convert.ToInt32(txtIdArticulo.Text);

@@ -1,4 +1,5 @@
 ﻿using CodigoComun.Modelos;
+using CodigoComun.Modelos.DTO;
 using CodigoComun.Negocio;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,8 @@ namespace WinFormsAppStock.Vistas
         private void CargarDatosArticuloParaModificar(int idArticuloAModificar)
         {
             ArticuloService articuloService = new ArticuloService();
-            Articulo articuloConDatosDeLaBaseDeDatos = articuloService.GetArticuloPorId(idArticuloAModificar);
+            List<ArticuloDTO> listaArticulos = articuloService.ObtenerTodosLosArticulos();
+            ArticuloDTO articuloConDatosDeLaBaseDeDatos = listaArticulos.Find(a => a.Id == idArticuloAModificar);
 
             if (articuloConDatosDeLaBaseDeDatos != null)
             {
@@ -56,6 +58,7 @@ namespace WinFormsAppStock.Vistas
 
 
 
+
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -69,9 +72,9 @@ namespace WinFormsAppStock.Vistas
             }
         }
 
-        private void AgregarArticulo()
+            private void AgregarArticulo()
         {
-            Articulo nuevoArticulo = new Articulo();
+            ArticuloDTO nuevoArticulo = new ArticuloDTO();
             nuevoArticulo.Nombre = txtNombre.Text;
             nuevoArticulo.Marca = txtMarca.Text;
             nuevoArticulo.MinimoStock = Convert.ToDecimal(txtMinimoStock.Text);
@@ -80,24 +83,21 @@ namespace WinFormsAppStock.Vistas
             nuevoArticulo.Codigo = txtCodigo.Text;
 
             ArticuloService articuloServices = new ArticuloService();
-            string mensaje = articuloServices.AgregarArticulo(nuevoArticulo);
+            ArticuloDTO resultado = articuloServices.AgregarArticulo(nuevoArticulo);
 
-            if (mensaje == "Articulo Agregado")
+            if (!resultado.HuboError)
             {
-                MessageBox.Show("Articulo agregado correctamente a la base de datos.");
-            }
-            else if (mensaje == null) // Manejar mensaje nulo
-            {
-                MessageBox.Show("Ocurrió un error al agregar el Articulo a la base de datos.");
+                MessageBox.Show(resultado.Mensaje);
             }
             else
             {
-                MessageBox.Show(mensaje);
+                MessageBox.Show(resultado.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void ModificarArticulo()
+
+             private void ModificarArticulo()
         {
-            Articulo articuloAModificar = new Articulo();
+            ArticuloDTO articuloAModificar = new ArticuloDTO();
             articuloAModificar.Id = Convert.ToInt32(txtIdArticulo.Text);
             articuloAModificar.Nombre = txtNombre.Text;
             articuloAModificar.Marca = txtMarca.Text;
@@ -106,18 +106,19 @@ namespace WinFormsAppStock.Vistas
             articuloAModificar.Precio = Convert.ToDecimal(txtPrecio.Text);
 
             ArticuloService articuloServices = new ArticuloService();
-            string mensaje = articuloServices.ActualizarArticulo(articuloAModificar);
+            ArticuloDTO resultado = articuloServices.ActualizarArticulo(articuloAModificar);
 
-            if (mensaje == "Articulo Actualizado")
+            if (!resultado.HuboError)
             {
                 MessageBox.Show("Articulo modificado con exito");
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Error modificando articulo");
+                MessageBox.Show(resultado.Mensaje);
             }
         }
+
 
     }
 }

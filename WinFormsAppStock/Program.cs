@@ -1,3 +1,7 @@
+using Microsoft.Data.SqlClient.Server;
+using Microsoft.SqlServer.Server;
+using System.Windows.Forms;
+
 namespace WinFormsAppStock
 {
     internal static class Program
