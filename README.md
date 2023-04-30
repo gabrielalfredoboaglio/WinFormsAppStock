@@ -20,3 +20,15 @@ Si deseas eliminar un artículo de tu inventario, simplemente haz clic en el bot
 Para agregar un nuevo artículo a tu inventario, haz clic en el botón "Agregar artículo" en la parte superior de la pantalla. Esto te llevará a una pantalla donde podrás ingresar la información del artículo, incluyendo su nombre, descripción y cantidad inicial.
 
 
+## Agregar Depósitos
+Para agregar un nuevo depósito, haz clic en el botón "Agregar depósito" en la parte superior de la pantalla. Esto te llevará a una pantalla donde podrás ingresar el nombre del depósito. Una vez que hayas agregado el depósito, podrás asignar los artículos a ese depósito y ver la cantidad disponible en ese depósito.
+
+## Conexión a la Base de Datos en la Nube
+Para hacer funcionar el programa, es necesario conectarlo a una base de datos en la nube. Para hacer esto, sigue los siguientes pasos:
+
+1. Crea una base de datos en la nube. Puedes utilizar servicios de proveedores de nube como Microsoft Azure o Amazon Web Services para hacer esto.
+2. Obtén la cadena de conexión para tu base de datos.
+3. Abre el archivo "App.config" en el proyecto.
+4. Actualiza la cadena de conexión con la información de tu base de datos en la nube.
+5. Una vez que hayas actualizado la cadena de conexión, podrás conectarte a tu base de datos en la nube.
+6. Utiliza el programa para ver, modificar, eliminar y agregar artículos a diferentes depósitos
