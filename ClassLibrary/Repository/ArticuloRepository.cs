@@ -24,13 +24,19 @@ namespace CodigoComun.Repository
 
         public int AddArticuloDB(Articulo ArticuloAAgregar)
         {
-            string query = $"insert into articulo (Nombre, Marca, MinimoStock, Proveedor, Precio, Codigo) " +
-                $"values ('{ArticuloAAgregar.Nombre}', '{ArticuloAAgregar.Marca}', {ArticuloAAgregar.MinimoStock}, " +
-                $"'{ArticuloAAgregar.Proveedor}', {ArticuloAAgregar.Precio.ToString("0.00", CultureInfo.InvariantCulture)}, " +
-                $"'{ArticuloAAgregar.Codigo}')";
+            string query = "INSERT INTO articulo (Nombre, Marca, MinimoStock, Proveedor, Precio, Codigo) " +
+                "VALUES (@Nombre, @Marca, @MinimoStock, @Proveedor, @Precio, @Codigo)";
+            SqlCommand command = new SqlCommand(query);
+            command.Parameters.AddWithValue("@Nombre", ArticuloAAgregar.Nombre);
+            command.Parameters.AddWithValue("@Marca", ArticuloAAgregar.Marca);
+            command.Parameters.AddWithValue("@MinimoStock", ArticuloAAgregar.MinimoStock);
+            command.Parameters.AddWithValue("@Proveedor", ArticuloAAgregar.Proveedor);
+            command.Parameters.AddWithValue("@Precio", ArticuloAAgregar.Precio);
+            command.Parameters.AddWithValue("@Codigo", ArticuloAAgregar.Codigo);
+
             try
             {
-                SqlCommand command = new SqlCommand(query);
+                ac.Conectar();
                 int r = ac.ejecQueryDevuelveInt(command);
                 return r;
             }
@@ -44,6 +50,7 @@ namespace CodigoComun.Repository
                 ac.DesConectar();
             }
         }
+
         public int ActualizarEnDb(Articulo articuloAActualizar)
         {
             string query = $"update articulo set Nombre = '{articuloAActualizar.Nombre}', " +

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CodigoComun.Datos;
 using CodigoComun.Modelos.DTO;
 using AutoMapper;
+using System.Runtime.CompilerServices;
 
 namespace CodigoComun.Negocio
 {
@@ -60,6 +61,8 @@ namespace CodigoComun.Negocio
                 return articuloDTOAAgregar;
             }
         }
+
+
 
 
         public ArticuloDTO ActualizarArticulo(ArticuloDTO articuloAActualizar)
