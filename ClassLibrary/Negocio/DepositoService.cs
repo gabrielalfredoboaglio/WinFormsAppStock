@@ -108,6 +108,8 @@ namespace CodigoComun.Negocio
         }
 
 
+
+
         public List<DepositoDTO> ObtenerTodosLosDepositos()
         {
             DepositoRepository depositoRepository = new DepositoRepository();

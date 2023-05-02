@@ -16,6 +16,14 @@ public class StockService
         try
         {
             var stock = stockDTOAAgregar.GetStock(stockDTOAAgregar);
+
+            // Verificar si ya existe el stock
+            var stockExistente = _stockRepository.ObtenerTodosLosStocks();
+            if (stockExistente != null)
+            {
+                return new StockDTO { Mensaje = "Ya existe un stock con este artículo y depósito" };
+            }
+
             int r = _stockRepository.AddStock(stock);
 
             if (r == 1)
@@ -23,26 +31,22 @@ public class StockService
                 stockDTOAAgregar.Mensaje = "Stock Agregado";
                 return stockDTOAAgregar;
             }
-
             else
             {
                 stockDTOAAgregar.HuboError = true;
                 stockDTOAAgregar.Mensaje = "No se pudo agregar el Stock";
-
                 return stockDTOAAgregar;
             }
 
         }
-
         catch (Exception ex)
         {
             stockDTOAAgregar.HuboError = true;
-            stockDTOAAgregar.Mensaje =$"Ocurrio una excepcion agregando stock  {ex.Message}";   
-
+            stockDTOAAgregar.Mensaje = $"Ocurrio una excepcion agregando stock  {ex.Message}";
             return stockDTOAAgregar;
-
         }
     }
+
     public StockDTO ActualizarStock(StockDTO stockAActualizar)
     {
         try
@@ -134,7 +138,6 @@ public class StockService
 
         return stocksDTO;
     }
-
 
 
 
