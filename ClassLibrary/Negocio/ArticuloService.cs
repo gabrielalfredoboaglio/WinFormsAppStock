@@ -39,6 +39,15 @@ namespace CodigoComun.Negocio
                     return articuloDTOAAgregar;
                 }
 
+                Articulo articuloPorCodigo = articuloRepository.GetArticuloPorCodigo(articuloDTOAAgregar.Codigo);
+
+                if (articuloPorCodigo != null)
+                {
+                    articuloDTOAAgregar.HuboError = true;
+                    articuloDTOAAgregar.Mensaje = $"Ya existe un artículo con ese código {articuloDTOAAgregar.Codigo}";
+                    return articuloDTOAAgregar;
+                }
+
                 Articulo articulo = articuloDTOAAgregar.GetArticulo(articuloDTOAAgregar);
 
                 int r = articuloRepository.AddArticuloDB(articulo);
@@ -50,7 +59,7 @@ namespace CodigoComun.Negocio
                 }
                 else
                 {
-                    articuloDTOAAgregar.Mensaje = "No se pudo agregar el  Articulo";
+                    articuloDTOAAgregar.Mensaje = "No se pudo agregar el Articulo";
                     return articuloDTOAAgregar;
                 }
             }
@@ -61,6 +70,7 @@ namespace CodigoComun.Negocio
                 return articuloDTOAAgregar;
             }
         }
+
 
 
 
