@@ -140,7 +140,44 @@ public class StockService
     }
 
 
+    public List<StockDTO> ObtenerStockPorDeposito(int idDeposito)
+    {
+        var stocks = _stockRepository.ObtenerTodosLosStocksPorDeposito(idDeposito);
+        var stocksDTO = new List<StockDTO>();
 
+        foreach (var stock in stocks)
+        {
+            stocksDTO.Add(new StockDTO
+            {
+                Id = stock.Id,
+                IdArticulo = stock.IdArticulo,
+                IdDeposito = stock.IdDeposito,
+                Cantidad = stock.Cantidad
+                
+            });
+        }
+
+        return stocksDTO;
+    }
+
+    public List<StockDTO> ObtenerStockPorArticulo(int idArticulo)
+    {
+        var stocks = _stockRepository.ObtenerTodosLosStocksPorArticulo(idArticulo);
+        var stocksDTO = new List<StockDTO>();
+
+        foreach (var stock in stocks)
+        {
+            stocksDTO.Add(new StockDTO
+            {
+                Id = stock.Id,
+                IdArticulo = stock.IdArticulo,
+                IdDeposito = stock.IdDeposito,
+                Cantidad = stock.Cantidad
+            });
+        }
+
+        return stocksDTO;
+    }
 
 
 }

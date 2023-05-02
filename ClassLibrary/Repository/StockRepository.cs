@@ -90,6 +90,40 @@ namespace CodigoComun.Repository
                 }
             }
         }
+        public List<Stock> ObtenerTodosLosStocksPorDeposito(int idDeposito)
+        {
+            using (var context = new StockAppContext())
+            {
+                var stocks = context.Stocks.Where(s => s.IdDeposito == idDeposito).ToList();
+                foreach (var stock in stocks)
+                {
+                    var articulo = context.Stocks.FirstOrDefault(a => a.Id == stock.IdArticulo);
+                    stock.ArticuloGuardado = articulo;
 
+                    var deposito = context.Depositos.FirstOrDefault(d => d.Id == stock.IdDeposito);
+                    stock.DepositoDondeEstaGuardado = deposito;
+                }
+
+                return stocks;
+            }
+        }
+
+        public List<Stock> ObtenerTodosLosStocksPorArticulo(int idArticulo)
+        {
+            using (var context = new StockAppContext())
+            {
+                var stocks = context.Stocks.Where(s => s.IdArticulo == idArticulo).ToList();
+                foreach (var stock in stocks)
+                {
+                    var articulo = context.Stocks.FirstOrDefault(a => a.Id == stock.IdArticulo);
+                    stock.ArticuloGuardado = articulo;
+
+                    var deposito = context.Depositos.FirstOrDefault(d => d.Id == stock.IdDeposito);
+                    stock.DepositoDondeEstaGuardado = deposito;
+                }
+
+                return stocks;
+            }
+        }
     }
 }
