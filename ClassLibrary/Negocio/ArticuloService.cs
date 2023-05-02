@@ -25,54 +25,51 @@ namespace CodigoComun.Negocio
 
 
         public ArticuloDTO AgregarArticulo(ArticuloDTO articuloDTOAAgregar)
+{
+    try
+    {
+        ArticuloRepository articuloRepository = new ArticuloRepository();
+
+        Articulo articuloAuxiliar = articuloRepository.GetArticuloPorId(articuloDTOAAgregar.Id);
+
+        if (articuloAuxiliar != null)
         {
-            try
-            {
-                ArticuloRepository articuloRepository = new ArticuloRepository();
-
-                Articulo articuloAuxiliar = articuloRepository.GetArticuloPorId(articuloDTOAAgregar.Id);
-
-                if (articuloAuxiliar != null)
-                {
-                    articuloDTOAAgregar.HuboError = true;
-                    articuloDTOAAgregar.Mensaje = $"Ya existe un articulo con ese Id {articuloDTOAAgregar.Id}";
-                    return articuloDTOAAgregar;
-                }
-
-                Articulo articuloPorCodigo = articuloRepository.GetArticuloPorCodigo(articuloDTOAAgregar.Codigo);
-
-                if (articuloPorCodigo != null)
-                {
-                    articuloDTOAAgregar.HuboError = true;
-                    articuloDTOAAgregar.Mensaje = $"Ya existe un artículo con ese código {articuloDTOAAgregar.Codigo}";
-                    return articuloDTOAAgregar;
-                }
-
-                Articulo articulo = articuloDTOAAgregar.GetArticulo(articuloDTOAAgregar);
-
-                int r = articuloRepository.AddArticuloDB(articulo);
-
-                if (r == 1)
-                {
-                    articuloDTOAAgregar.Mensaje = "Articulo Agregado";
-                    return articuloDTOAAgregar;
-                }
-                else
-                {
-                    articuloDTOAAgregar.Mensaje = "No se pudo agregar el Articulo";
-                    return articuloDTOAAgregar;
-                }
-            }
-            catch (Exception ex)
-            {
-                articuloDTOAAgregar.HuboError = true;
-                articuloDTOAAgregar.Mensaje = $"Hubo una excepcion dando el alta del articulo {ex.Message}";
-                return articuloDTOAAgregar;
-            }
+            articuloDTOAAgregar.HuboError = true;
+            articuloDTOAAgregar.Mensaje = $"Ya existe un articulo con ese Id {articuloDTOAAgregar.Id}";
+            return articuloDTOAAgregar;
         }
 
+        Articulo articuloPorCodigo = articuloRepository.GetArticuloPorCodigo(articuloDTOAAgregar.Codigo);
 
+        if (articuloPorCodigo != null)
+        {
+            articuloDTOAAgregar.HuboError = true;
+            articuloDTOAAgregar.Mensaje = $"Ya existe un artículo con ese código {articuloDTOAAgregar.Codigo}";
+            return articuloDTOAAgregar;
+        }
 
+        Articulo articulo = articuloDTOAAgregar.GetArticulo(articuloDTOAAgregar);
+
+        int r = articuloRepository.AddArticuloDB(articulo);
+
+        if (r == 1)
+        {
+            articuloDTOAAgregar.Mensaje = "Articulo Agregado";
+            return articuloDTOAAgregar;
+        }
+        else
+        {
+            articuloDTOAAgregar.Mensaje = "No se pudo agregar el Articulo";
+            return articuloDTOAAgregar;
+        }
+    }
+    catch (Exception ex)
+    {
+        articuloDTOAAgregar.HuboError = true;
+        articuloDTOAAgregar.Mensaje = $"Hubo una excepcion dando el alta del articulo {ex.Message}";
+        return articuloDTOAAgregar;
+    }
+}
 
 
         public ArticuloDTO ActualizarArticulo(ArticuloDTO articuloAActualizar)
@@ -122,7 +119,8 @@ namespace CodigoComun.Negocio
 
             return articulosDTO;
         }
-        public ArticuloDTO EliminarArticulo(int idArticuloEliminar)
+       
+     public ArticuloDTO EliminarArticulo(int idArticuloEliminar)
         {
             ArticuloRepository articuloRepository = new ArticuloRepository();
             int resultado = articuloRepository.EliminarEnDb(idArticuloEliminar);
@@ -139,7 +137,7 @@ namespace CodigoComun.Negocio
 
 
 
-       
+
 
         public ArticuloDTO GetArticuloPorId(int articuloId)
         {

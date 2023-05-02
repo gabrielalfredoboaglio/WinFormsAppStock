@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CodigoComun.Modelos.DTO
 {
-    public class ArticuloDTO: BaseDTO
+    public class ArticuloDTO : BaseDTO
     {
         public int Id { get; set; }
         public string Nombre { set; get; }
@@ -23,12 +23,12 @@ namespace CodigoComun.Modelos.DTO
 
         public string Mensaje { get; set; }
 
-        public bool  HuboError { get; set; }
+        public bool HuboError { get; set; }
+
+      
 
         public Articulo GetArticulo(ArticuloDTO articuloDTO)
         {
-
-
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ArticuloDTO, Articulo>());
             var mapper = new Mapper(config);
 
@@ -37,3 +37,4 @@ namespace CodigoComun.Modelos.DTO
         }
     }
 }
+

@@ -15,11 +15,23 @@ namespace CodigoComun.Negocio
         {
             DepositoRepository depositoRepository = new DepositoRepository();
 
-
             try
             {
-                var deposito = depositoDTOAAgregar.GetDeposito(depositoDTOAAgregar);
+                // Obtener una lista de todos los depósitos existentes en la base de datos
+                var depositosExistentes = depositoRepository.GetTodosLosDepositos();
 
+                // Verificar si el nombre del depósito a agregar ya existe en la lista obtenida
+                if (depositosExistentes.Any(d => d.Nombre == depositoDTOAAgregar.Nombre))
+                {
+                    return new DepositoDTO
+                    {
+                        Mensaje = "No se puede agregar el depósito porque ya existe uno con el mismo nombre",
+                        HuboError = true
+                    };
+                }
+
+                // Agregar el depósito a la base de datos
+                var deposito = depositoDTOAAgregar.GetDeposito(depositoDTOAAgregar);
                 int r = depositoRepository.AddDeposito(deposito);
 
                 if (r == 1)
@@ -40,6 +52,8 @@ namespace CodigoComun.Negocio
                 return depositoDTOAAgregar;
             }
         }
+
+
 
 
 
