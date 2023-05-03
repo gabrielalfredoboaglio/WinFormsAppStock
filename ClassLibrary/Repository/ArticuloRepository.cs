@@ -1,5 +1,6 @@
 ﻿using CodigoComun.Datos;
 using CodigoComun.Modelos;
+using CodigoComun.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -77,6 +78,15 @@ namespace CodigoComun.Repository
             }
         }
 
+    
+
+        public class ArticuloAsociadoConStockException : Exception
+        {
+            public ArticuloAsociadoConStockException(string mensaje) : base(mensaje)
+            {
+            }
+        }
+
         public int EliminarEnDb(int idArticuloEliminar)
         {
             string query = $"delete articulo where id={idArticuloEliminar}";
@@ -86,15 +96,25 @@ namespace CodigoComun.Repository
                 int r = ac.ejecQueryDevuelveInt(command);
                 return r;
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                return -1;
+                if (ex.Message.Contains("The DELETE statement conflicted with the REFERENCE constraint"))
+                {
+                    throw new ArticuloAsociadoConStockException("No se puede eliminar el artículo porque está asociado con un stock");
+                }
+                else
+                {
+                    throw ex;
+                }
             }
             finally
             {
                 ac.DesConectar();
             }
         }
+
+
+
         public List<Articulo> GetTodosLosArticulos()
         {
             try
@@ -250,11 +270,15 @@ namespace CodigoComun.Repository
         }
 
 
+
     }
 
 }
 
 
-     
-    
+
+
+
+
+
 

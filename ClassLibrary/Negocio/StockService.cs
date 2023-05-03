@@ -18,7 +18,7 @@ public class StockService
             var stock = stockDTOAAgregar.GetStock(stockDTOAAgregar);
 
             // Verificar si ya existe el stock
-            var stockExistente = _stockRepository.ObtenerTodosLosStocks();
+            var stockExistente = _stockRepository.ObtenerStockPorArticuloYDeposito((int)stock.IdArticulo, (int)stock.IdDeposito);
             if (stockExistente != null)
             {
                 return new StockDTO { Mensaje = "Ya existe un stock con este artículo y depósito" };
@@ -46,6 +46,7 @@ public class StockService
             return stockDTOAAgregar;
         }
     }
+
 
     public StockDTO ActualizarStock(StockDTO stockAActualizar)
     {
@@ -178,6 +179,5 @@ public class StockService
 
         return stocksDTO;
     }
-
 
 }

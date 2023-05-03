@@ -98,7 +98,7 @@ namespace CodigoComun.Negocio
                 }
                 else
                 {
-                    return new DepositoDTO { Mensaje = "Error al eliminar el depósito" };
+                    return new DepositoDTO { Mensaje = "Error al eliminar ya que este depósito tiene articulos en Stock." };
                 }
             }
             catch (Exception ex)

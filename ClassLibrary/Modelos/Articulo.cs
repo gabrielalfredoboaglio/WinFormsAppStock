@@ -1,6 +1,7 @@
 ﻿
 
 using CodigoComun.Datos;
+using CodigoComun.Modelos.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,7 +32,7 @@ namespace CodigoComun.Modelos
 
         private AccesoDatos ac;
 
-
+        public StockDTO Stock { get; set; }
         public Articulo()
         {
             ac = new AccesoDatos();

@@ -11,6 +11,7 @@ using CodigoComun.Datos;
 using CodigoComun.Modelos.DTO;
 using AutoMapper;
 using System.Runtime.CompilerServices;
+using static CodigoComun.Repository.ArticuloRepository;
 
 namespace CodigoComun.Negocio
 {
@@ -20,56 +21,56 @@ namespace CodigoComun.Negocio
 
         private ArticuloRepository articuloRepository = new ArticuloRepository();
 
-       
+
         private readonly IMapper _mapper;
 
 
         public ArticuloDTO AgregarArticulo(ArticuloDTO articuloDTOAAgregar)
-{
-    try
-    {
-        ArticuloRepository articuloRepository = new ArticuloRepository();
-
-        Articulo articuloAuxiliar = articuloRepository.GetArticuloPorId(articuloDTOAAgregar.Id);
-
-        if (articuloAuxiliar != null)
         {
-            articuloDTOAAgregar.HuboError = true;
-            articuloDTOAAgregar.Mensaje = $"Ya existe un articulo con ese Id {articuloDTOAAgregar.Id}";
-            return articuloDTOAAgregar;
+            try
+            {
+                ArticuloRepository articuloRepository = new ArticuloRepository();
+
+                Articulo articuloAuxiliar = articuloRepository.GetArticuloPorId(articuloDTOAAgregar.Id);
+
+                if (articuloAuxiliar != null)
+                {
+                    articuloDTOAAgregar.HuboError = true;
+                    articuloDTOAAgregar.Mensaje = $"Ya existe un articulo con ese Id {articuloDTOAAgregar.Id}";
+                    return articuloDTOAAgregar;
+                }
+
+                Articulo articuloPorCodigo = articuloRepository.GetArticuloPorCodigo(articuloDTOAAgregar.Codigo);
+
+                if (articuloPorCodigo != null)
+                {
+                    articuloDTOAAgregar.HuboError = true;
+                    articuloDTOAAgregar.Mensaje = $"Ya existe un artículo con ese código {articuloDTOAAgregar.Codigo}";
+                    return articuloDTOAAgregar;
+                }
+
+                Articulo articulo = articuloDTOAAgregar.GetArticulo(articuloDTOAAgregar);
+
+                int r = articuloRepository.AddArticuloDB(articulo);
+
+                if (r == 1)
+                {
+                    articuloDTOAAgregar.Mensaje = "Articulo Agregado";
+                    return articuloDTOAAgregar;
+                }
+                else
+                {
+                    articuloDTOAAgregar.Mensaje = "No se pudo agregar el Articulo";
+                    return articuloDTOAAgregar;
+                }
+            }
+            catch (Exception ex)
+            {
+                articuloDTOAAgregar.HuboError = true;
+                articuloDTOAAgregar.Mensaje = $"Hubo una excepcion dando el alta del articulo {ex.Message}";
+                return articuloDTOAAgregar;
+            }
         }
-
-        Articulo articuloPorCodigo = articuloRepository.GetArticuloPorCodigo(articuloDTOAAgregar.Codigo);
-
-        if (articuloPorCodigo != null)
-        {
-            articuloDTOAAgregar.HuboError = true;
-            articuloDTOAAgregar.Mensaje = $"Ya existe un artículo con ese código {articuloDTOAAgregar.Codigo}";
-            return articuloDTOAAgregar;
-        }
-
-        Articulo articulo = articuloDTOAAgregar.GetArticulo(articuloDTOAAgregar);
-
-        int r = articuloRepository.AddArticuloDB(articulo);
-
-        if (r == 1)
-        {
-            articuloDTOAAgregar.Mensaje = "Articulo Agregado";
-            return articuloDTOAAgregar;
-        }
-        else
-        {
-            articuloDTOAAgregar.Mensaje = "No se pudo agregar el Articulo";
-            return articuloDTOAAgregar;
-        }
-    }
-    catch (Exception ex)
-    {
-        articuloDTOAAgregar.HuboError = true;
-        articuloDTOAAgregar.Mensaje = $"Hubo una excepcion dando el alta del articulo {ex.Message}";
-        return articuloDTOAAgregar;
-    }
-}
 
 
         public ArticuloDTO ActualizarArticulo(ArticuloDTO articuloAActualizar)
@@ -119,23 +120,32 @@ namespace CodigoComun.Negocio
 
             return articulosDTO;
         }
-       
-     public ArticuloDTO EliminarArticulo(int idArticuloEliminar)
-        {
-            ArticuloRepository articuloRepository = new ArticuloRepository();
-            int resultado = articuloRepository.EliminarEnDb(idArticuloEliminar);
 
-            if (resultado == 1)
+        public ArticuloDTO EliminarArticulo(int idArticuloEliminar)
+        {
+            try
             {
-                return new ArticuloDTO { Mensaje = "Articulo eliminado correctamente" };
+                ArticuloRepository articuloRepository = new ArticuloRepository();
+                int resultado = articuloRepository.EliminarEnDb(idArticuloEliminar);
+
+                if (resultado == 1)
+                {
+                    return new ArticuloDTO { Mensaje = "Articulo eliminado correctamente" };
+                }
+                else
+                {
+                    return new ArticuloDTO { Mensaje = "Error al eliminar el articulo" };
+                }
             }
-            else
+            catch (ArticuloAsociadoConStockException ex)
             {
-                return new ArticuloDTO { Mensaje = "Error al eliminar el articulo" };
+                return new ArticuloDTO { Mensaje = ex.Message };
+            }
+            catch (Exception ex)
+            {
+                return new ArticuloDTO { Mensaje = $"Hubo un error eliminando el artículo: {ex.Message}" };
             }
         }
-
-
 
 
 
@@ -183,4 +193,3 @@ namespace CodigoComun.Negocio
 
     }
 }
-

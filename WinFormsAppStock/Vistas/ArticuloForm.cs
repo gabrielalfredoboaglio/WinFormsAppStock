@@ -51,7 +51,7 @@ namespace WinFormsAppStock.Vistas
             }
             else
             {
-                MessageBox.Show("Hubo un error al eliminar el articulo.");
+                MessageBox.Show(resultado.Mensaje);
             }
         }
 

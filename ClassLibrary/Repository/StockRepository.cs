@@ -1,4 +1,5 @@
-﻿using CodigoComun.Models;
+﻿using CodigoComun.Modelos;
+using CodigoComun.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -124,6 +125,27 @@ namespace CodigoComun.Repository
 
                 return stocks;
             }
+
+
         }
+        public Stock ObtenerStockPorArticuloYDeposito(int idArticulo, int idDeposito)
+        {
+            try
+            {
+                return db.Stocks.FirstOrDefault(s => s.IdArticulo == idArticulo && s.IdDeposito == idDeposito);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+
+
     }
+
+
+
+
 }
