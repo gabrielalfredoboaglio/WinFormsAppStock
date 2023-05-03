@@ -99,7 +99,7 @@ namespace WinFormsAppStock.Vistas
             }
         }
 
-        
+
         private void btnModificar_Click(object sender, EventArgs e)
         {
             // Obtener los datos del Stock a modificar
@@ -139,14 +139,18 @@ namespace WinFormsAppStock.Vistas
                 MessageBox.Show("La cantidad ingresada no es válida");
             }
         }
+
+
         private void button2_Click(object sender, EventArgs e)
         {
-            btnAgregar_Click(sender, e);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            btnModificar_Click(sender, e);
+            if (IdStock == 0) // Si el ID de stock no está seteado, se trata de un nuevo registro
+            {
+                btnAgregar_Click(sender, e); // Llamamos al evento del botón "Agregar"
+            }
+            else // Si el ID de stock está seteado, se trata de una modificación
+            {
+                btnModificar_Click(sender, e); // Llamamos al evento del botón "Modificar"
+            }
         }
     }
 }

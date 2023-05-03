@@ -36,7 +36,6 @@
             txtCantidad = new TextBox();
             txtIdComboboxArticulo = new ComboBox();
             txtComboBoxDeposito = new ComboBox();
-            button1 = new Button();
             button2 = new Button();
             SuspendLayout();
             // 
@@ -112,17 +111,6 @@
             txtComboBoxDeposito.Size = new Size(212, 38);
             txtComboBoxDeposito.TabIndex = 13;
             // 
-            // button1
-            // 
-            button1.Location = new Point(175, 391);
-            button1.Margin = new Padding(4);
-            button1.Name = "button1";
-            button1.Size = new Size(260, 44);
-            button1.TabIndex = 17;
-            button1.Text = "Modificar Stock";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
             // button2
             // 
             button2.Location = new Point(548, 391);
@@ -130,7 +118,7 @@
             button2.Name = "button2";
             button2.Size = new Size(260, 44);
             button2.TabIndex = 18;
-            button2.Text = "Agregar Stock";
+            button2.Text = "Guardar";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
@@ -140,7 +128,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1313, 479);
             Controls.Add(button2);
-            Controls.Add(button1);
             Controls.Add(txtComboBoxDeposito);
             Controls.Add(txtIdComboboxArticulo);
             Controls.Add(txtCantidad);
@@ -165,7 +152,6 @@
         private TextBox txtCantidad;
         private ComboBox txtIdComboboxArticulo;
         private ComboBox txtComboBoxDeposito;
-        private Button button1;
         private Button button2;
     }
 }
