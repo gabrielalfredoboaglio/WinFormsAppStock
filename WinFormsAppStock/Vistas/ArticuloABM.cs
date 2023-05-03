@@ -104,7 +104,7 @@ namespace WinFormsAppStock.Vistas
             articuloAModificar.MinimoStock = Convert.ToDecimal(txtMinimoStock.Text);
             articuloAModificar.Proveedor = txtProveedor.Text;
             articuloAModificar.Precio = Convert.ToDecimal(txtPrecio.Text);
-
+            articuloAModificar.Codigo = txtCodigo.Text;
             ArticuloService articuloServices = new ArticuloService();
             ArticuloDTO resultado = articuloServices.ActualizarArticulo(articuloAModificar);
 

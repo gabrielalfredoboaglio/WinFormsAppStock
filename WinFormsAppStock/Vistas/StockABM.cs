@@ -110,9 +110,12 @@ namespace WinFormsAppStock.Vistas
                 // Obtener el StockDTO del Stock a modificar
                 StockDTO stockAModificar = _stockService.ObtenerStockPorId(idStockAModificar);
 
+
                 // Obtener el Id de Articulo y el Id de Deposito correspondientes al Stock que se está modificando
                 int idArticulo = (int)stockAModificar.IdArticulo;
                 int idDeposito = (int)stockAModificar.IdDeposito;
+                // Deshabilitar los campos de Id de Articulo y Id de Deposito
+             
 
                 // Convertir el objeto Stock a StockDTO
                 StockDTO stockDTO = new StockDTO

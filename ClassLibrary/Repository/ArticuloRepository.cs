@@ -54,16 +54,27 @@ namespace CodigoComun.Repository
 
         public int ActualizarEnDb(Articulo articuloAActualizar)
         {
-            string query = $"update articulo set Nombre = '{articuloAActualizar.Nombre}', " +
-                           $"Marca='{articuloAActualizar.Marca}', " +
-                           $"MinimoStock={articuloAActualizar.MinimoStock}, " +
-                           $"Proveedor='{articuloAActualizar.Proveedor}', " +
-                           $"Precio = {articuloAActualizar.Precio.ToString("0.00", CultureInfo.InvariantCulture)}, " +
-                           $"Codigo = '{articuloAActualizar.Codigo}' " +
-                           $"where id = {articuloAActualizar.Id}";
+            string query = "UPDATE articulo SET " +
+                           "Nombre = @Nombre, " +
+                           "Marca = @Marca, " +
+                           "MinimoStock = @MinimoStock, " +
+                           "Proveedor = @Proveedor, " +
+                           "Precio = @Precio, " +
+                           "Codigo = @Codigo " +
+                           "WHERE id = @Id";
+
             try
             {
                 SqlCommand command = new SqlCommand(query);
+                command.Parameters.AddWithValue("@Nombre", articuloAActualizar.Nombre);
+                command.Parameters.AddWithValue("@Marca", articuloAActualizar.Marca);
+                command.Parameters.AddWithValue("@MinimoStock", articuloAActualizar.MinimoStock);
+                command.Parameters.AddWithValue("@Proveedor", articuloAActualizar.Proveedor);
+                command.Parameters.AddWithValue("@Precio", articuloAActualizar.Precio);
+                command.Parameters.AddWithValue("@Codigo", articuloAActualizar.Codigo);
+                command.Parameters.AddWithValue("@Id", articuloAActualizar.Id);
+
+                ac.Conectar();
                 int r = ac.ejecQueryDevuelveInt(command);
                 return r;
             }
@@ -78,7 +89,8 @@ namespace CodigoComun.Repository
             }
         }
 
-    
+
+
 
         public class ArticuloAsociadoConStockException : Exception
         {
