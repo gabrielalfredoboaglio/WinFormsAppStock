@@ -19,7 +19,7 @@ namespace CodigoComun.Modelos.DTO
         public string Mensaje { get; set; }
         public bool HuboError { get; set; }
 
-        public StockDTO Stock { get; set; }
+   
 
         public Articulo GetArticulo(ArticuloDTO articuloDTO)
         {
