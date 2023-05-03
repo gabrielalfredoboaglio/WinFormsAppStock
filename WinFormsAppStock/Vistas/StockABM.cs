@@ -96,8 +96,6 @@ namespace WinFormsAppStock.Vistas
          private void CargarDatosStockParaModificar(int idStockAModificar)
         {
             StockDTO stockConDatosDeLaBaseDeDatos = _stockService.ObtenerStockPorId(idStockAModificar);
-
-
             ArticuloDTO articulo = articuloService.GetArticuloPorId((int)stockConDatosDeLaBaseDeDatos.IdArticulo);
             DepositoDTO deposito = depositoService.ObtenerDepositoPorId((int)stockConDatosDeLaBaseDeDatos.IdDeposito);
 
