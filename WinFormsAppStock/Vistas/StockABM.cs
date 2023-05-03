@@ -22,6 +22,9 @@ namespace WinFormsAppStock.Vistas
     public partial class StockABM : Form
     {
         private readonly StockService _stockService;
+
+        ArticuloService articuloService = new ArticuloService();
+        DepositoService depositoService = new DepositoService();
         public int IdStock { get; set; }
 
         public StockABM()
@@ -94,8 +97,6 @@ namespace WinFormsAppStock.Vistas
         {
             StockDTO stockConDatosDeLaBaseDeDatos = _stockService.ObtenerStockPorId(idStockAModificar);
 
-            ArticuloService articuloService = new ArticuloService();
-            DepositoService depositoService = new DepositoService();
 
             ArticuloDTO articulo = articuloService.GetArticuloPorId((int)stockConDatosDeLaBaseDeDatos.IdArticulo);
             DepositoDTO deposito = depositoService.ObtenerDepositoPorId((int)stockConDatosDeLaBaseDeDatos.IdDeposito);
