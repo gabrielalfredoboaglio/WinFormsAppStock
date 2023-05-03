@@ -39,15 +39,7 @@ namespace WinFormsAppStock.Vistas
             CargarDatosStockParaModificar(IdStock);
             txtIdStock.Text = IdStock.ToString();
         }
-        private void CargarDatosStockParaModificar(int idStockAModificar)
-        {
-            StockDTO stockConDatosDeLaBaseDeDatos = _stockService.ObtenerStockPorId(idStockAModificar);
-
-            txtIdComboboxArticulo.Text = stockConDatosDeLaBaseDeDatos.IdArticulo.ToString();
-            txtComboBoxDeposito.Text = stockConDatosDeLaBaseDeDatos.IdDeposito.ToString();
-            txtCantidad.Text = stockConDatosDeLaBaseDeDatos.Cantidad.ToString();
-
-        }
+        
 
         private void CargarComboBoxes()
         {
@@ -97,6 +89,20 @@ namespace WinFormsAppStock.Vistas
                 // La conversión falló, la cadena de caracteres no tiene un formato válido
                 MessageBox.Show("La cantidad ingresada no es válida");
             }
+        }
+         private void CargarDatosStockParaModificar(int idStockAModificar)
+        {
+            StockDTO stockConDatosDeLaBaseDeDatos = _stockService.ObtenerStockPorId(idStockAModificar);
+
+            ArticuloService articuloService = new ArticuloService();
+            DepositoService depositoService = new DepositoService();
+
+            ArticuloDTO articulo = articuloService.GetArticuloPorId((int)stockConDatosDeLaBaseDeDatos.IdArticulo);
+            DepositoDTO deposito = depositoService.ObtenerDepositoPorId((int)stockConDatosDeLaBaseDeDatos.IdDeposito);
+
+            txtIdComboboxArticulo.Text = articulo.Nombre;
+            txtComboBoxDeposito.Text = deposito.Nombre;
+            txtCantidad.Text = stockConDatosDeLaBaseDeDatos.Cantidad.ToString();
         }
 
 
